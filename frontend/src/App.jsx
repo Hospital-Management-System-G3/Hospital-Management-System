@@ -1,19 +1,29 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import AboutUsPage from './pages/AboutPage';
-import ContactUsPage from './pages/ContactPage';
-import HomePage from './pages/HomePage'
-import ProfilePage from './pages/ProfilePage'
-import Header from './componentUser/header';
-import Footer from './componentUser/footer';
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  useLocation,
+} from "react-router-dom";
+import AboutUsPage from "./pages/AboutPage";
+import ContactUsPage from "./pages/ContactPage";
+import HomePage from "./pages/HomePage";
+import ProfilePage from "./pages/ProfilePage";
+import Header from "./componentUser/header";
+import Footer from "./componentUser/footer";
 import Register from "./Pages/register";
 import Login from "./Pages/login";
 import Admin from "./admin/HealthDashboard";
 
 const App = () => {
+  const location = useLocation();
+
+  // Check if the current path is "/admin"
+  const isAdminRoute = location.pathname === "/admin";
+
   return (
-    <Router>
-      <Header />
+    <>
+      {!isAdminRoute && <Header />}
       <div className="app">
         <Routes>
           <Route path="/" element={<HomePage />} />
@@ -25,9 +35,15 @@ const App = () => {
           <Route path="/admin" element={<Admin />} />
         </Routes>
       </div>
-      <Footer />
-    </Router>
+      {!isAdminRoute && <Footer />}
+    </>
   );
 };
 
-export default App;
+const RootApp = () => (
+  <Router>
+    <App />
+  </Router>
+);
+
+export default RootApp;
