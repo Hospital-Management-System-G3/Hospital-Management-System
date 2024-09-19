@@ -5,3 +5,13 @@
 // import thunk from 'redux-thunk';
 // import rootReducer from '../redux/rootReducer';
 // export const store = createStore(rootReducer, applyMiddleware(thunk));
+import { configureStore } from "@reduxjs/toolkit";
+import authReducer from "../slices/userSlice.js";
+
+const store = configureStore({
+  reducer: {
+    auth: authReducer,
+  },
+});
+
+export default store;
