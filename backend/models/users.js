@@ -1,4 +1,5 @@
 // createTables.js
+//we must add chat_id here 
 
 // Import the database pool from config
 const pool = require('../config/db');
@@ -6,7 +7,7 @@ const pool = require('../config/db');
 // Define the function to create the 'users' table
 const createUsersTable = async () => {
   const query = `
-    CREATE TABLE IF NOT EXISTS users (
+      CREATE TABLE IF NOT EXISTS users (
       user_id  SERIAL PRIMARY KEY,
       username VARCHAR(255) NOT NULL,
       password VARCHAR(255) NOT NULL,
@@ -14,6 +15,7 @@ const createUsersTable = async () => {
       role VARCHAR(50) DEFAULT 'user',
       profilepic VARCHAR(255),
       is_deleted BOOLEAN DEFAULT false
+
     );
   `;
 
