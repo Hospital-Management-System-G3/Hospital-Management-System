@@ -3,13 +3,20 @@ const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const pool = require('./config/db'); // Import the database pool
-
+const cookieParser = require('cookie-parser');
 const app = express();
 
-// Middleware
-app.use(cors());
 app.use(bodyParser.json());
+const path = require("path");
+app.use(cookieParser());
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+// Middleware
 
+
+app.use(cors({
+  origin: 'http://localhost:5173', 
+  credentials: true 
+}));
 // Test DB connection
 pool.query('SELECT NOW()', (err, res) => {
   if (err) {
@@ -18,6 +25,9 @@ pool.query('SELECT NOW()', (err, res) => {
     console.log('DB connected at:', res.rows[0].now); // Log connection timestamp
   }
 });
+const userRoute = require("./Routes/userRoute");
+app.use('/api/users' , userRoute)
+
 
 // Routes
 app.get('/', (req, res) => {
