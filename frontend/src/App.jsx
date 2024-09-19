@@ -8,6 +8,7 @@ import Header from './componentUser/header';
 import Footer from './componentUser/footer';
 import Register from "./Pages/register";
 import Login from "./Pages/login";
+import HealthcareProviderDashboard from "./componentsUser/test";
 
 const App = () => {
   return (
@@ -21,6 +22,8 @@ const App = () => {
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/log-in" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/test" element={<HealthcareProviderDashboard />} />
         </Routes>
       </div>
       <Footer />
