@@ -14,6 +14,7 @@ import Footer from "./componentUser/footer";
 import Register from "./Pages/register";
 import Login from "./Pages/login";
 import Admin from "./admin/HealthDashboard";
+import HealthcareProviderDashboard from "./componentsUser/test";
 
 const App = () => {
   const location = useLocation();
@@ -33,6 +34,8 @@ const App = () => {
           <Route path="/log-in" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/admin" element={<Admin />} />
+
+          <Route path="/test" element={<HealthcareProviderDashboard />} />
         </Routes>
       </div>
       {!isAdminRoute && <Footer />}
