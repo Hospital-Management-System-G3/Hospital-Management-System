@@ -7,12 +7,16 @@ const pool = require('../config/db');
 const createDoctorAvailabilitiesTable = async () => {
   const query = `
     CREATE TABLE IF NOT EXISTS doctor_availabilities (
-      availability_id SERIAL PRIMARY KEY, -- معرّف فريد لكل سجل
-      doctor_id INTEGER NOT NULL REFERENCES users(user_id) ON DELETE CASCADE, -- معرّف الطبيب
-      available_date DATE NOT NULL, -- التاريخ المتاح للحجز
-      available_time_from TIME NOT NULL, -- وقت بدء التوفر للحجز
-      available_time_to TIME NOT NULL, -- وقت انتهاء التوفر للحجز
-      CONSTRAINT valid_availability CHECK (available_time_from < available_time_to) -- التحقق من أن وقت البداية أقل من وقت النهاية
+      availability_id SERIAL PRIMARY KEY, -- Unique identifier for each record
+      doctor_id INTEGER NOT NULL REFERENCES users(user_id) ON DELETE CASCADE, -- Doctor identifier
+      available_date DATE NOT NULL, -- Date available for booking
+      available_time_from TIME NOT NULL, -- Start time of availability
+      available_time_to TIME NOT NULL, -- End time of availability
+      status VARCHAR(20) NOT NULL DEFAULT 'active', -- Status (e.g., 'active', 'cancelled', 'pending', 'confirmed', 'completed')
+      is_booked BOOLEAN NOT NULL DEFAULT FALSE, -- Indicates if the slot is booked
+      is_deleted BOOLEAN NOT NULL DEFAULT FALSE, -- Indicates if the record is deleted
+      total_price DECIMAL(10, 2) NOT NULL, -- Total price for the booking
+      CONSTRAINT valid_availability CHECK (available_time_from < available_time_to) -- Ensure start time is before end time
     );
   `;
 
