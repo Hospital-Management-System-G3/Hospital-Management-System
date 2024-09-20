@@ -11,6 +11,8 @@ const path = require("path");
 app.use(cookieParser());
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 // Middleware
+const CatalogeRoute = require('./Routes/CatalogeRoute'); 
+
 
 
 app.use(cors({
@@ -27,7 +29,8 @@ pool.query('SELECT NOW()', (err, res) => {
 });
 const userRoute = require("./Routes/userRoute");
 app.use('/api/users' , userRoute)
-
+///husban
+app.use('/api/users', CatalogeRoute);
 
 // Routes
 app.get('/', (req, res) => {

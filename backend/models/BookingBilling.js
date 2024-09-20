@@ -14,6 +14,8 @@ const createBookingBillingTable = async () => {
       hospital_profit DECIMAL(10, 2) DEFAULT 0, -- Profit for the hospital
       created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, -- Timestamp when the billing was created
       is_deleted BOOLEAN NOT NULL DEFAULT FALSE -- Flag to indicate if the record is deleted
+
+      
     );
   `;
 
