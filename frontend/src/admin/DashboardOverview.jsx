@@ -25,7 +25,7 @@ const DashboardOverview = () => {
   ];
 
   return (
-    <main className="flex-1 ml-[3.5rem] p-8 w-full overflow-y-auto">
+    <main className="flex-1 ml-[3.5rem] mr-[18rem] p-8 w-full overflow-y-auto">
       <WelcomeCard />
       <Overview />
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">

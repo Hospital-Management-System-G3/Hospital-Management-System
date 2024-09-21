@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 import AppointmentManagement from "../admin/AppointmentManagement";
 import DashboardOverview from "../admin/DashboardOverview";
+import PatientManagement from "../admin/PatientManagement";
 // import other components like PatientManagement, Billing, StaffManagement, Reports
 
 const Sidebar = () => {
@@ -49,18 +50,18 @@ const Sidebar = () => {
         return <DashboardOverview />;
       case "User":
         return <PatientManagement />;
-      case "Patient":
-        return <Billing />;
-      case "Staff":
-        return <StaffManagement />;
-      case "AppointmentManagement":
-        return <AppointmentManagement />;
-      case "Billing":
-        return <Billing />;
-      case "Reports":
-        return <Reports />;
-      case "Settings":
-        return <Settings />;
+      // case "Patient":
+      //   return <Billing />;
+      // case "Staff":
+      //   return <StaffManagement />;
+      // case "AppointmentManagement":
+      //   return <AppointmentManagement />;
+      // case "Billing":
+      //   return <Billing />;
+      // case "Reports":
+      //   return <Reports />;
+      // case "Settings":
+      //   return <Settings />;
       default:
         return <div>No Content Selected</div>;
     }
