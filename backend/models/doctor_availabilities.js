@@ -16,6 +16,7 @@ const createDoctorAvailabilitiesTable = async () => {
       is_booked BOOLEAN NOT NULL DEFAULT FALSE, -- Indicates if the slot is booked
       is_deleted BOOLEAN NOT NULL DEFAULT FALSE, -- Indicates if the record is deleted
       total_price DECIMAL(10, 2) NOT NULL, -- Total price for the booking
+      service_type VARCHAR(50) NOT NULL, -- Type of service provided by the doctor
       CONSTRAINT valid_availability CHECK (available_time_from < available_time_to) -- Ensure start time is before end time
     );
   `;

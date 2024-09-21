@@ -7,10 +7,13 @@
 // export const store = createStore(rootReducer, applyMiddleware(thunk));
 import { configureStore } from "@reduxjs/toolkit";
 import authReducer from "../slices/userSlice.js";
-
+import doctorData from "../slices/doctorSlice.js";
+ 
 const store = configureStore({
   reducer: {
     auth: authReducer,
+    doctorData: doctorData,
+    
   },
 });
 

@@ -26,7 +26,9 @@ pool.query('SELECT NOW()', (err, res) => {
   }
 });
 const userRoute = require("./Routes/userRoute");
+const doctorRoutes = require("./Routes/doctorRoutes");
 app.use('/api/users' , userRoute)
+app.use('/api' , doctorRoutes)
 
 
 // Routes
