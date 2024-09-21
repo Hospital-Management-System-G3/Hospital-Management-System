@@ -26,7 +26,7 @@ const Login = () => {
     
     try {
       const result = await dispatch(loginUser(formData)).unwrap();
-      navigate("/home"); 
+      navigate("/"); 
     } catch (error) {
       console.log("Login failed:", error.message || error);
     }

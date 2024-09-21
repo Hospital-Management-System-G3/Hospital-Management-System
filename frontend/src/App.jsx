@@ -13,8 +13,11 @@ import Header from "./componentUser/header";
 import Footer from "./componentUser/footer";
 import Register from "./Pages/register";
 import Login from "./Pages/login";
+ 
+import HealthcareProviderDashboard from "./pages/doctorManage/doctorManage";
+ 
 import Admin from "./admin/HealthDashboard";
-import HealthcareProviderDashboard from "./componentsUser/test";
+ 
 
 const App = () => {
   const location = useLocation();
@@ -33,10 +36,13 @@ const App = () => {
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/log-in" element={<Login />} />
           <Route path="/register" element={<Register />} />
+ 
           <Route path="/admin" element={<Admin />} />
-
+         <Route path="/doctor" element={<HealthcareProviderDashboard />} />
+ 
           <Route path="/test" element={<HealthcareProviderDashboard />} />
         </Routes>
+ 
       </div>
       {!isAdminRoute && <Footer />}
     </>
