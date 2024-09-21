@@ -29,7 +29,7 @@ const HealthDashboard = () => {
   ];
 
   return (
-    <div className="flex bg-green-50 min-h-screen">
+    <div className=" bg-green-50 min-h-screen">
       {/* Sidebar is fixed */}
       <Sidebar />
 
