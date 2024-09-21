@@ -23,7 +23,18 @@ exports.registerUser = async (req, res) => {
       sameSite: "Lax",
     });
 
-    res.status(201).json(user);
+    // Return user data along with the role
+    res
+      .status(201)
+      .json({
+        message: "User registered successfully",
+        user: {
+          id: user.user_id,
+          username: user.username,
+          email: user.email,
+          role: user.role,
+        },
+      });
   } catch (err) {
     console.error("Error:", err);
     res.status(500).json({ error: "Error registering user" });
@@ -52,9 +63,14 @@ exports.loginUser = async (req, res) => {
       secure: process.env.NODE_ENV === "production", // Set secure flag if in production
       sameSite: "Lax",
     });
-    res.status(200).json({ message: "Logged in successfully" });
+
+    // Return user role in the response
+    res
+      .status(200)
+      .json({ message: "Logged in successfully", role: user.role });
   } catch (err) {
     res.status(500).json({ error: "Error logging in" });
   }
 };
+
 // -------
