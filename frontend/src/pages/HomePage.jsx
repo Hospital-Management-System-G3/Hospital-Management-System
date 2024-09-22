@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence, useAnimation } from 'framer-motion';
 import ChatSidebar from '../componentUser/chatSidebar';
+import { useDispatch, useSelector } from "react-redux";
+import { setUserRole, clearUserRole } from '../slices/roleSice';
 import { Heart, Activity, Clipboard, Hospital, Calendar, Users, HeartPulse, Stethoscope, Thermometer, Pill, BriefcaseMedical, Menu, X, Facebook, Twitter, Instagram, Linkedin, MessageCircle, Send, Search } from 'lucide-react';
 
 const floatingIcons = [Heart, Activity, Clipboard, Hospital, Calendar, Users, Stethoscope, Thermometer, Pill, BriefcaseMedical, Heart, Activity, Clipboard, Hospital, Calendar];
@@ -142,6 +144,9 @@ const AutoSliderImage = () => {
 const HomePage = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [isChatOpen, setIsChatOpen] = useState(false);
+    const userRole = useSelector((state) => state.userRole.role);
+
+    console.log(userRole);
 
     const handleLoadingComplete = () => {
         setIsLoading(false);
@@ -340,16 +345,27 @@ const HomePage = () => {
 
             <AutoSlider />
 
-            <motion.button
-                className="fixed bottom-4 right-4 bg-emerald-500 text-white p-4 rounded-full shadow-lg"
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-                onClick={() => setIsChatOpen(true)}
-            >
-                <MessageCircle size={24} />
-            </motion.button>
+
+
+            {userRole == null ? (
+                <>
+
+                </>
+            ) : (
+                <>
+                    <motion.button
+                        className="fixed bottom-4 right-4 bg-emerald-500 text-white p-4 rounded-full shadow-lg"
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.9 }}
+                        onClick={() => setIsChatOpen(true)}
+                    >
+                        <MessageCircle size={24} />
+                    </motion.button>
+                </>
+            )}
 
             <ChatSidebar isOpen={isChatOpen} onClose={() => setIsChatOpen(false)} />
+
 
         </div>
     );
