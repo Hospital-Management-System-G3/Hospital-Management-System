@@ -70,10 +70,14 @@ The dashboard allows administrators to manage patient records, staff schedules, 
 
 ## Team Members 
  
-**Reem Abukarsh Scrum Master**
-**Obada Jawabreh  QA**
-**Mohammed Alhusban Product Owner**
-  **Abd-Alrahman Ata Developer**
+**Reem Abukarsh Scrum Master**  
+
+**Obada Jawabreh  QA**  
+
+**Mohammed Alhusban Product Owner**  
+
+  **Abd-Alrahman Ata Developer**  
+  
   **Islam Ismail Developer**
 
 
