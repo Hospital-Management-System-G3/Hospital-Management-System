@@ -104,10 +104,13 @@ function PatientRecords() {
             <InfoItem label="Phone" value={patient.phone} />
             {isEditing ? (
               <>
+              temperature DECIMAL(4, 2) NOT NULL,
+              blood_pressure INTEGER NOT NULL,
                 <EditableInfoItem label="Medical History" name="medical_history" value={editedPatient.medical_history} onChange={handleInputChange} />
                 <EditableInfoItem label="Treatment Plan" name="treatment_plan" value={editedPatient.treatment_plan} onChange={handleInputChange} />
                 <EditableInfoItem label="Allergies" name="allergies" value={editedPatient.allergies} onChange={handleInputChange} />
-                <EditableInfoItem label="Notes" name="notes" value={editedPatient.notes} onChange={handleInputChange} />
+                <EditableInfoItem label="Temperature" name="temperature" value={editedPatient.temperature} onChange={handleInputChange} />
+                <EditableInfoItem label="Blood Pressure" name="blood_pressure" value={editedPatient.blood_pressure} onChange={handleInputChange} />
               </>
             ) : (
               <>
@@ -115,7 +118,8 @@ function PatientRecords() {
                 <InfoItem label="Medical History" value={patient.medical_history || 'N/A'} />
                 <InfoItem label="Treatment Plan" value={patient.treatment_plan || 'N/A'} />
                 <InfoItem label="Allergies" value={patient.allergies || 'N/A'} />
-                <InfoItem label="Notes" value={patient.notes || 'N/A'} />
+                <InfoItem label="Temperature" value={patient.temperature || 'N/A'} />
+                <InfoItem label="Blood Pressure" value={patient.blood_pressure || 'N/A'} />
               </>
             )}
           </div>
@@ -143,7 +147,9 @@ function PatientRecords() {
       allergies:'',
       notes:'',
       height:'',
-      Weight:''
+      Weight:'',
+      blood_pressure:'',
+      temperature:''
     });
  
 
@@ -171,8 +177,9 @@ function PatientRecords() {
                 <EditableInfoItem label="Treatment Plan" name="treatment_plan" value={newPatient.treatment_plan} onChange={handleInputChange} />
                 <EditableInfoItem label="Allergies" name="allergies" value={newPatient.allergies} onChange={handleInputChange} />
                 <EditableInfoItem label="Notes" name="notes" value={newPatient.notes} onChange={handleInputChange} />
-          
-          </div>
+                <EditableInfoItem label="Temperature" name="temperature" value={newPatient.temperature} onChange={handleInputChange} />
+                <EditableInfoItem label="Blood Pressure" name="blood_pressure" value={newPatient.blood_pressure} onChange={handleInputChange} />
+           </div>
           <Button onClick={() => onSave(newPatient)} className="mt-6 mr-2">Add Patient</Button>
           <Button onClick={onClose} className="mt-6">Cancel</Button>
         </div>

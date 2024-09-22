@@ -15,6 +15,18 @@ function Appointments() {
   });
  
 
+  const completed = async (billingId) => {
+    try {
+      await axios.post(`http://localhost:5000/api/completeAppointment/${billingId}`);
+      // Optionally, you can refresh the booked data after completing an appointment
+      fetchDatabooked();
+    } catch (error) {
+      console.error("Error completing appointment:", error);
+    }
+  };
+
+
+
   const fetchData = useCallback(async () => {
     try {
       const response = await axios.get("http://localhost:5000/api/doctorAvailabilities", { withCredentials: true });
@@ -46,7 +58,7 @@ function Appointments() {
     }
   };
 
-  const formatDate = (isoDate) => {
+    const formatDate = (isoDate) => {
     
     if (!isoDate) return 'N/A'; // Handle null or undefined dates
     const dateObject = new Date(isoDate);
@@ -55,11 +67,11 @@ function Appointments() {
       return 'Invalid Date'; // Return a placeholder for invalid dates
     }
     return dateObject.toISOString().split('T')[0];
-  };
+    };
 
-  const addTime = () => {
+    const addTime = () => {
     setShowAddForm(true);
-  };
+    };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -248,7 +260,7 @@ function Appointments() {
                   <td className="border border-green-200 p-3">${billing.total_price}</td>
                   <td className="border border-green-200 p-3">${billing.doctor_profit}</td>
                   <td className="border border-green-200 p-3">${billing.hospital_profit}</td>
-                  <td className="border border-green-200 p-3">${billing.status}</td>
+                  <td className="border border-green-200 p-3">{billing.status}</td>
                   <td className="border border-green-200 p-3">
                     <Button onClick={() => completed(billing.billing_id)}>completed</Button>
                   </td>

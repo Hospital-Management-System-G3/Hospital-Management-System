@@ -1,7 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence, useAnimation } from 'framer-motion';
 import ChatSidebar from '../componentUser/chatSidebar';
+// import video from '../../src/assets/video/video';
 import { Heart, Activity, Clipboard, Hospital, Calendar, Users, HeartPulse, Stethoscope, Thermometer, Pill, BriefcaseMedical, Menu, X, Facebook, Twitter, Instagram, Linkedin, MessageCircle, Send, Search } from 'lucide-react';
+import Map from './Map';
 
 const floatingIcons = [Heart, Activity, Clipboard, Hospital, Calendar, Users, Stethoscope, Thermometer, Pill, BriefcaseMedical, Heart, Activity, Clipboard, Hospital, Calendar];
 
@@ -155,52 +157,49 @@ const HomePage = () => {
         <div className="min-h-screen bg-gradient-to-b from-emerald-50 to-emerald-100">
 
             <main>
-                <section className="relative py-20 overflow-hidden min-h-screen flex items-center "
-                    style={{
-                        backgroundImage: 'url("https://i.pinimg.com/736x/72/3b/f8/723bf831b674ed3fefdcd0e9c0030644.jpg")',
-                        backgroundSize: 'cover',
-                        backgroundPosition: 'center',
-                    }}
-                >
+            <section className="relative h-screen flex items-center justify-center overflow-hidden">
+      {/* Video Background */}
+      <video 
+      src="https://v1.pinimg.com/videos/iht/720p/3c/c5/cf/3cc5cf54cf55a508865efc08f97a60db.mp4"
+        autoPlay 
+        loop 
+        muted 
+        className="absolute w-full h-full object-cover"
+      >
+        {/* <source src="../componentUser/video/video.mp4" type="video/mp4" />
+        Your browser does not support the video tag. */}
+      </video>
 
-                    <div
-                        className="container px-6 relative z-10 mx-4 sm:mx-8 md:mx-16 lg:mx-24"
+      {/* Overlay */}
+      <div className="absolute inset-0 bg-black opacity-50"></div>
 
-                    >
-                        <motion.h1
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.8 }}
-                            className="text-5xl md:text-7xl font-bold mb-6 text-emerald-900"
-                        >
-                            Your Health, Our Priority
-                        </motion.h1>
-                        <motion.p
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.8, delay: 0.2 }}
-                            className="text-xl mb-8 text-emerald-800"
-                        >
-                            Experience modern healthcare with the help of experienced doctors.
-                        </motion.p>
-                        <motion.button
-                            whileHover={{ scale: 1.05 }}
-                            whileTap={{ scale: 0.95 }}
-                            className="bg-emerald-500 text-white px-8 py-4 rounded-full font-semibold hover:bg-emerald-600 transition duration-300 text-lg"
-                        >
-                            Get Started
-                        </motion.button>
-                    </div>
-
-
-                    {floatingIcons.map((Icon, index) => (
-                        <FloatingIcon
-                            key={index}
-                            Icon={Icon}
-                            delay={index * 0.2}
-                        />
-                    ))}
-                </section>
+      {/* Content */}
+      <div className="relative z-10 text-center text-white px-4">
+        <motion.h1
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          className="text-5xl md:text-7xl font-bold mb-6"
+        >
+          Your Health, Our Priority
+        </motion.h1>
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+          className="text-xl md:text-2xl mb-8"
+        >
+          Experience modern healthcare with the help of experienced doctors.
+        </motion.p>
+        <motion.button
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          className="bg-emerald-500 text-white px-8 py-4 rounded-full font-semibold hover:bg-emerald-600 transition duration-300 text-lg"
+        >
+          Get Started
+        </motion.button>
+      </div>
+    </section>
 
 
                 <section className="py-20 bg-white relative overflow-hidden px-16 max-sm:px-1">
@@ -351,6 +350,9 @@ const HomePage = () => {
 
             <ChatSidebar isOpen={isChatOpen} onClose={() => setIsChatOpen(false)} />
 
+
+
+<Map/>
         </div>
     );
 };
