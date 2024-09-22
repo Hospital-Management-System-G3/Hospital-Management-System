@@ -52,7 +52,28 @@ const getContacts = async (req, res) => {
   }
 };
 
+const submitContact = async (req, res) => {
+  // console.log("inside contact controller");
+  try {
+      const { formData } = req.body;
+      // console.log(formData);
+      // console.log(formData.name, formData.email, formData.message);
+
+      const response = pool.query(
+          "INSERT INTO contacts( name, email, contact_message) VALUES($1, $2, $3) RETURNING *",
+          [formData.name, formData.email, formData.message]
+      )
+      .catch(err=>{console.log(err)})
+
+      res.status(201).json({ message: "Contact message sent successfully" });
+  } catch (err) {
+      console.log("Server error :", err)
+      res.status(500).json({ error: "Server error (contact controller)" });
+  }
+}
+
 module.exports = {
   getContacts,
   replyToFeedback,
+  submitContact,
 };

@@ -1,51 +1,17 @@
-import React, { useState, useEffect } from "react";
-import { motion } from "framer-motion";
-import { MapPin, Phone, Mail, MessageCircle, Send } from "lucide-react";
-import axios from "axios";
+import React, { useState } from 'react';
+import { motion } from 'framer-motion';
+import { MapPin, Phone, Mail, MessageCircle, Send } from 'lucide-react';
+import { useDispatch, useSelector } from "react-redux";
+import { submitContact } from "./../slices/contactSlice";
+import Swal from 'sweetalert2'
 
 const ContactUsPage = () => {
+  const dispatch = useDispatch();
   const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    message: "",
+    name: '',
+    email: '',
+    message: '',
   });
-
-  const [contactInfo, setContactInfo] = useState([]);
-  const [backgroundColor, setBackgroundColor] = useState("#ffffff"); // Default background color
-
-  useEffect(() => {
-    const fetchContactInfo = async () => {
-      try {
-        const response = await axios.get(
-          "http://localhost:5000/api/info/contact"
-        );
-        const { address, phone_number, email } = response.data;
-        setContactInfo([
-          { icon: MapPin, text: address },
-          { icon: Phone, text: phone_number },
-          { icon: Mail, text: email },
-        ]);
-      } catch (error) {
-        console.error("Error fetching contact info:", error.message);
-      }
-    };
-
-    const fetchSettings = async () => {
-      try {
-        const response = await axios.get(
-          "http://localhost:5000/api/settings/get"
-        );
-        const { background_color } = response.data;
-        console.log("Fetched background color:", background_color);
-        setBackgroundColor(background_color);
-      } catch (error) {
-        console.error("Error fetching settings:", error.message);
-      }
-    };
-
-    fetchContactInfo();
-    fetchSettings();
-  }, []);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -55,11 +21,22 @@ const ContactUsPage = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Form submitted:", formData);
-    // Reset form after submission
-    setFormData({ name: "", email: "", message: "" });
+    try {
+      const response = await dispatch(submitContact(formData))
+        .catch(err => { console.log(err) });
+      // console.log('Form submitted:', formData);
+      setFormData({ name: '', email: '', message: '' });
+      Swal.fire({
+        title: "Message sent successfully",
+        icon: "success",
+        showConfirmButton: false,
+        timer: 1500
+      });
+    } catch (err) {
+      console.error("Unexpected error:", err);
+    }
   };
 
   const pageVariants = {
@@ -68,15 +45,26 @@ const ContactUsPage = () => {
     out: { opacity: 0, y: -20 },
   };
 
+  const pageTransition = {
+    type: 'tween',
+    ease: 'anticipate',
+    duration: 0.5,
+  };
+
+  const contactInfo = [
+    { icon: MapPin, text: '123 Healthcare Ave, Medical City, HC 12345' },
+    { icon: Phone, text: '+1 (555) 123-4567' },
+    { icon: Mail, text: 'contact@carelth.com' },
+  ];
+
   return (
     <motion.div
       initial="initial"
       animate="in"
       exit="out"
       variants={pageVariants}
-      transition={{ type: "tween", ease: "anticipate", duration: 0.5 }}
-      style={{ backgroundColor }}
-      className="min-h-screen  py-12 px-4 sm:px-6 lg:px-8"
+      transition={pageTransition}
+      className="min-h-screen bg-gradient-to-b from-emerald-50 to-emerald-100 py-12 px-4 sm:px-6 lg:px-8"
     >
       <div className="max-w-7xl mx-auto">
         <motion.div
@@ -85,12 +73,8 @@ const ContactUsPage = () => {
           transition={{ duration: 0.5 }}
           className="text-center mb-12"
         >
-          <h1 className="text-4xl font-bold text-emerald-800 mb-4">
-            Contact Us
-          </h1>
-          <p className="text-xl text-emerald-600">
-            We're here to help and answer any questions you might have.
-          </p>
+          <h1 className="text-4xl font-bold text-emerald-800 mb-4">Contact Us</h1>
+          <p className="text-xl text-emerald-600">We're here to help and answer any questions you might have.</p>
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
@@ -101,15 +85,10 @@ const ContactUsPage = () => {
             transition={{ duration: 0.5, delay: 0.2 }}
             className="bg-white rounded-lg shadow-xl p-8"
           >
-            <h2 className="text-2xl font-semibold text-emerald-700 mb-6">
-              Send us a message
-            </h2>
+            <h2 className="text-2xl font-semibold text-emerald-700 mb-6">Send us a message</h2>
             <form onSubmit={handleSubmit}>
               <div className="mb-6">
-                <label
-                  htmlFor="name"
-                  className="block text-sm font-medium text-gray-700 mb-2"
-                >
+                <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
                   Name
                 </label>
                 <input
@@ -123,10 +102,7 @@ const ContactUsPage = () => {
                 />
               </div>
               <div className="mb-6">
-                <label
-                  htmlFor="email"
-                  className="block text-sm font-medium text-gray-700 mb-2"
-                >
+                <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
                   Email
                 </label>
                 <input
@@ -140,10 +116,7 @@ const ContactUsPage = () => {
                 />
               </div>
               <div className="mb-6">
-                <label
-                  htmlFor="message"
-                  className="block text-sm font-medium text-gray-700 mb-2"
-                >
+                <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
                   Message
                 </label>
                 <textarea
@@ -198,25 +171,19 @@ const ContactUsPage = () => {
             >
               <h3 className="text-xl font-semibold mb-4">Follow us</h3>
               <div className="flex space-x-4">
-                {["facebook", "twitter", "instagram", "linkedin"].map(
-                  (social) => (
-                    <motion.a
-                      key={social}
-                      href={`https://${social}.com`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      whileHover={{ scale: 1.2, rotate: 5 }}
-                      whileTap={{ scale: 0.9 }}
-                      className="bg-white text-emerald-600 p-2 rounded-full hover:bg-emerald-100 transition duration-300"
-                    >
-                      <img
-                        src={`/icons/${social}.svg`}
-                        alt={social}
-                        className="w-6 h-6"
-                      />
-                    </motion.a>
-                  )
-                )}
+                {['facebook', 'twitter', 'instagram', 'linkedin'].map((social) => (
+                  <motion.a
+                    key={social}
+                    href={`https://${social}.com`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    whileHover={{ scale: 1.2, rotate: 5 }}
+                    whileTap={{ scale: 0.9 }}
+                    className="bg-white text-emerald-600 p-2 rounded-full hover:bg-emerald-100 transition duration-300"
+                  >
+                    <img src={`/icons/${social}.svg`} alt={social} className="w-6 h-6" />
+                  </motion.a>
+                ))}
               </div>
             </motion.div>
           </motion.div>
@@ -229,9 +196,7 @@ const ContactUsPage = () => {
           transition={{ duration: 0.5, delay: 0.6 }}
           className="mt-16"
         >
-          <h2 className="text-2xl font-semibold text-emerald-800 mb-6">
-            Our Location
-          </h2>
+          <h2 className="text-2xl font-semibold text-emerald-800 mb-6">Our Location</h2>
           <div className="bg-white rounded-lg shadow-xl p-4 aspect-w-16 aspect-h-9">
             <iframe
               title="Carelth Location"
@@ -252,9 +217,7 @@ const ContactUsPage = () => {
           transition={{ duration: 0.5, delay: 0.8 }}
           className="mt-16 text-center"
         >
-          <h2 className="text-2xl font-semibold text-emerald-800 mb-4">
-            Need immediate assistance?
-          </h2>
+          <h2 className="text-2xl font-semibold text-emerald-800 mb-4">Need immediate assistance?</h2>
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}

@@ -4,6 +4,7 @@ import axios from "axios";
 import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import logo from "../assets/logo.png";
+import {Link} from "react-router-dom"
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
