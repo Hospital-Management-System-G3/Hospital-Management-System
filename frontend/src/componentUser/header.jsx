@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
-import {Menu, X } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import logo from "../assets/logo.png"
-
-
-
+import { Link } from 'react-router-dom'; // Import Link for navigation
+import logo from "../assets/logo.png";
 
 const Header = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -28,48 +26,33 @@ const Header = () => {
                         <div className="text-2xl font-bold">Carelth</div>
                     </motion.div>
                     <div className="hidden md:flex space-x-6">
-                        {['Home', 'Services', 'Hospitals', 'About Us', 'Contact'].map((item) => (
-                            <motion.a
-                                key={item}
-                                href="#"
-                                className="hover:text-emerald-200 transition duration-300 font-semibold"
-                                whileHover={{ scale: 1.1 }}
-                                whileTap={{ scale: 0.95 }}
-                            >
-                                {item}
-                            </motion.a>
-                        ))}
+                        {/* All Links have the same structure as Register and Login now */}
+                        <Link to="/" className="hover:text-emerald-200 transition duration-300 font-semibold">Home</Link>
+                        <Link to="/services" className="hover:text-emerald-200 transition duration-300 font-semibold">Services</Link>
+                        <Link to="/hospitals" className="hover:text-emerald-200 transition duration-300 font-semibold">Hospitals</Link>
+                        <Link to="/about" className="hover:text-emerald-200 transition duration-300 font-semibold">About Us</Link>
+                        <Link to="/contact" className="hover:text-emerald-200 transition duration-300 font-semibold">Contact</Link>
                     </div>
-                    {false ? (
-                        <Link to="/profile">
-                            <motion.button
-                                className="hidden md:block bg-white text-emerald-500 px-6 py-2 rounded-full hover:bg-emerald-100 transition duration-300 font-semibold shadow-md"
-                                whileHover={{ scale: 1.05 }}
-                                whileTap={{ scale: 0.95 }}
-                            >
-                                Profile
-                            </motion.button>
-                        </Link>
-                    ) : (
-                        <div className="hidden md:flex space-x-4">
+                    <div className="hidden md:flex space-x-4">
+                        <Link to="/register">
                             <motion.button
                                 className="bg-white text-emerald-500 px-6 py-2 rounded-full hover:bg-emerald-100 transition duration-300 font-semibold shadow-md"
                                 whileHover={{ scale: 1.05 }}
                                 whileTap={{ scale: 0.95 }}
-                                onClick={() => setIsLoggedIn(true)}
                             >
                                 Sign Up
                             </motion.button>
+                        </Link>
+                        <Link to="/log-in">
                             <motion.button
                                 className="bg-emerald-500 text-white px-6 py-2 rounded-full hover:bg-emerald-600 transition duration-300 font-semibold shadow-md"
                                 whileHover={{ scale: 1.05 }}
                                 whileTap={{ scale: 0.95 }}
-                                onClick={() => setIsLoggedIn(true)}
                             >
                                 Log In
                             </motion.button>
-                        </div>
-                    )}
+                        </Link>
+                    </div>
                     <div className="md:hidden">
                         <button onClick={() => setIsOpen(!isOpen)}>
                             {isOpen ? <X size={24} /> : <Menu size={24} />}
@@ -86,46 +69,29 @@ const Header = () => {
                         transition={{ duration: 0.3 }}
                         className="md:hidden bg-emerald-600 p-4"
                     >
-                        {['Home', 'Services', 'Hospitals', 'About Us', 'Contact'].map((item) => (
-                            <motion.a
-                                key={item}
-                                href="#"
-                                className="block py-2 hover:text-emerald-200 transition duration-300"
-                                whileHover={{ x: 10 }}
+                        <Link to="/" className="block py-2 hover:text-emerald-200 transition duration-300">Home</Link>
+                        <Link to="/services" className="block py-2 hover:text-emerald-200 transition duration-300">Services</Link>
+                        <Link to="/hospitals" className="block py-2 hover:text-emerald-200 transition duration-300">Hospitals</Link>
+                        <Link to="/about" className="block py-2 hover:text-emerald-200 transition duration-300">About Us</Link>
+                        <Link to="/contact" className="block py-2 hover:text-emerald-200 transition duration-300">Contact</Link>
+                        <Link to="/register">
+                            <motion.button
+                                className="mt-4 w-full bg-white text-emerald-500 px-6 py-3 rounded-full hover:bg-emerald-100 transition duration-300 font-semibold"
+                                whileHover={{ scale: 1.05 }}
+                                whileTap={{ scale: 0.95 }}
                             >
-                                {item}
-                            </motion.a>
-                        ))}
-                        {false ? (
-                            <Link to="/profile">
-                                <motion.button
-                                    className="mt-4 w-full bg-white text-emerald-500 px-6 py-3 rounded-full hover:bg-emerald-100 transition duration-300 font-semibold"
-                                    whileHover={{ scale: 1.05 }}
-                                    whileTap={{ scale: 0.95 }}
-                                >
-                                    Profile
-                                </motion.button>
-                            </Link>
-                        ) : (
-                            <>
-                                <motion.button
-                                    className="mt-4 w-full bg-white text-emerald-500 px-6 py-3 rounded-full hover:bg-emerald-100 transition duration-300 font-semibold"
-                                    whileHover={{ scale: 1.05 }}
-                                    whileTap={{ scale: 0.95 }}
-                                    onClick={() => setIsLoggedIn(true)}
-                                >
-                                    Sign Up
-                                </motion.button>
-                                <motion.button
-                                    className="mt-4 w-full bg-emerald-600 text-white px-6 py-3 rounded-full hover:bg-emerald-700 transition duration-300 font-semibold"
-                                    whileHover={{ scale: 1.05 }}
-                                    whileTap={{ scale: 0.95 }}
-                                    onClick={() => setIsLoggedIn(true)}
-                                >
-                                    Log In
-                                </motion.button>
-                            </>
-                        )}
+                                Sign Up
+                            </motion.button>
+                        </Link>
+                        <Link to="/log-in">
+                            <motion.button
+                                className="mt-4 w-full bg-emerald-600 text-white px-6 py-3 rounded-full hover:bg-emerald-700 transition duration-300 font-semibold"
+                                whileHover={{ scale: 1.05 }}
+                                whileTap={{ scale: 0.95 }}
+                            >
+                                Log In
+                            </motion.button>
+                        </Link>
                     </motion.div>
                 )}
             </AnimatePresence>

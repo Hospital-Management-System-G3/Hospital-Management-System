@@ -40,8 +40,7 @@ const App = () => {
           <Route path="/admin" element={<Admin />} />
          <Route path="/doctor" element={<HealthcareProviderDashboard />} />
  
-          <Route path="/test" element={<HealthcareProviderDashboard />} />
-        </Routes>
+         </Routes>
  
       </div>
       {!isAdminRoute && <Footer />}
