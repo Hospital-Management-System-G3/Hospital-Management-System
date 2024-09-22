@@ -90,10 +90,10 @@ const Register = () => {
             >
               Register
             </button>
-            <p className="mt-4 text-xs text-gray-600 text-center">
-              Already have an account?{" "}
-              <a href="/" className="text-blue-600 hover:underline">
-                Login
+            <p className="mt-4 text-sm text-gray-500 text-center">
+            Already have an account?{" "}
+            <a href="/log-in" className="text-emerald-500 font-semibold hover:text-emerald-600">
+            Login
               </a>
             </p>
           </form>

@@ -40,31 +40,32 @@ const Login = () => {
   };
 
   return (
-    <div className="bg-gray-200 min-h-screen flex items-center justify-center py-6 px-4 lg:px-0">
-      <div className="w-full max-w-screen-md mx-auto bg-white shadow-lg flex flex-col lg:flex-row rounded-lg overflow-hidden">
-        <div className="w-full lg:w-1/2 p-8 flex flex-col items-center">
-          <h2 className="text-3xl font-bold mb-6 text-center text-blue-600">Login</h2>
+    <div className="bg-gray-100 min-h-screen flex items-center justify-center py-12 px-6">
+      <div className="w-full max-w-screen-lg mx-auto bg-white shadow-xl rounded-lg overflow-hidden lg:flex">
+        {/* Left Side - Form */}
+        <div className="w-full lg:w-1/2 p-10 flex flex-col justify-center">
+          <h2 className="text-4xl font-bold mb-8 text-center text-emerald-500">Welcome Back</h2>
           {error && <p className="text-red-500 mb-4">{error}</p>}
           {success && <p className="text-green-500 mb-4">{success}</p>}
-          <form onSubmit={handleLogin} className="mt-4 w-full flex flex-col gap-6">
-            <label className="block text-sm font-medium text-gray-700">
+          <form onSubmit={handleLogin} className="w-full flex flex-col gap-5">
+            <label className="block text-sm font-semibold text-gray-600">
               Email
               <input
-                className="mt-1 w-full px-4 py-3 rounded-lg bg-gray-100 border border-gray-300 placeholder-gray-500 text-sm focus:outline-none focus:border-blue-500"
+                className="mt-2 w-full px-4 py-3 rounded-lg bg-gray-100 border border-gray-300 focus:ring-emerald-500 focus:border-emerald-500"
                 type="email"
-                placeholder="Email"
+                placeholder="Enter your email"
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
                 required
               />
             </label>
-            <label className="block text-sm font-medium text-gray-700">
+            <label className="block text-sm font-semibold text-gray-600">
               Password
               <input
-                className="mt-1 w-full px-4 py-3 rounded-lg bg-gray-100 border border-gray-300 placeholder-gray-500 text-sm focus:outline-none focus:border-blue-500"
+                className="mt-2 w-full px-4 py-3 rounded-lg bg-gray-100 border border-gray-300 focus:ring-emerald-500 focus:border-emerald-500"
                 type="password"
-                placeholder="Password"
+                placeholder="Enter your password"
                 name="password"
                 value={formData.password}
                 onChange={handleChange}
@@ -73,18 +74,20 @@ const Login = () => {
             </label>
             <button
               type="submit"
-              className="mt-4 tracking-wide font-semibold bg-blue-600 text-white w-full py-3 rounded-lg hover:bg-blue-700 transition-all duration-300 ease-in-out"
+              className="mt-4 tracking-wide font-semibold bg-emerald-500 text-white w-full py-3 rounded-lg hover:bg-emerald-600 transition-all duration-300 ease-in-out shadow-md"
             >
               Log In
             </button>
-            <p className="mt-4 text-xs text-gray-600 text-center">
+          <p className="mt-4 text-sm text-gray-500 text-center">
               Don't have an account?{" "}
-              <a href="/register" className="text-blue-600 font-semibold">
+              <a href="/register" className="text-emerald-500 font-semibold hover:text-emerald-600">
                 Register Now
-              </a>
+              </a  >
             </p>
           </form>
         </div>
+
+        {/* Right Side - Image */}
         <div className="w-full lg:w-1/2">
           <img src={loginImage} className="w-full h-full object-cover" alt="Login" />
         </div>
