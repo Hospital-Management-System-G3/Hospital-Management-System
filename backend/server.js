@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const pool = require('./config/db'); // Import the database pool
 const cookieParser = require('cookie-parser');
 const app = express();
+const Stripe = require("stripe");
 
 app.use(bodyParser.json());
 const path = require("path");
@@ -26,8 +27,11 @@ pool.query('SELECT NOW()', (err, res) => {
   }
 });
 const userRoute = require("./Routes/userRoute");
+const payment = require("./Routes/paymentRoutes");
+const booking = require("./Routes/bookingRoute");
 app.use('/api/users' , userRoute)
-
+app.use("/api/auth", payment);
+app.use("/api/book", booking);
 
 // Routes
 app.get('/', (req, res) => {
