@@ -3,6 +3,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { X, Send, Search } from 'lucide-react';
 import { useDispatch, useSelector } from "react-redux";
 import { getChats, addMessage } from "../slices/chatsSlice";
+import { setUserRole, clearUserRole } from '../slices/roleSice';
 
 const ChatSidebar = ({ isOpen, onClose }) => {
     const { chats, messages_ } = useSelector((state) => state.chats);
@@ -10,16 +11,20 @@ const ChatSidebar = ({ isOpen, onClose }) => {
     const [selectedDoctor, setSelectedDoctor] = useState(null);
     const [messages, setMessages] = useState([]);
     const [inputMessage, setInputMessage] = useState('');
+    const userRole = useSelector((state) => state.userRole.role);
     const [searchTerm, setSearchTerm] = useState('');
     const [chatId, setchatId] = useState();
     const messagesEndRef = useRef(null);
 
+    console.log(userRole);
     console.log(chats, messages_);
+    // console.log(inputMessage);
 
     useEffect(() => {
         const fetchChats = async () => {
             try {
-                await dispatch(getChats());
+                console.log('userRole from chatSIdebar: ', userRole)
+                await dispatch(getChats(userRole));
             } catch (err) {
                 console.log(err);
             }
@@ -62,15 +67,15 @@ const ChatSidebar = ({ isOpen, onClose }) => {
                 console.log(err);
             }
 
-            // Simulate a response from the doctor
-            setTimeout(() => {
-                const responseMessage = {
-                    sender: 'doctor',
-                    text: "Thank you for your message. How can I assist you today?",
-                    time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-                };
-                setMessages(prevMessages => [...prevMessages, responseMessage]);
-            }, 1000);
+            // // Simulate a response from the doctor
+            // setTimeout(() => {
+            //     const responseMessage = {
+            //         sender: 'doctor',
+            //         text: "Thank you for your message. How can I assist you today?",
+            //         time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+            //     };
+            //     setMessages(prevMessages => [...prevMessages, responseMessage]);
+            // }, 1000);
         }
     };
 
@@ -103,10 +108,28 @@ const ChatSidebar = ({ isOpen, onClose }) => {
                                     <button onClick={() => setSelectedDoctor(null)} className="text-emerald-600 hover:text-emerald-800">
                                         &larr;
                                     </button>
-                                    <img src={selectedDoctor.doctor_picture} alt={selectedDoctor.doctor_name} className="w-10 h-10 rounded-full" />
+                                    {userRole == "user" ? (
+                                        <>
+                                            <img src={selectedDoctor.doctor_picture} alt={selectedDoctor.doctor_name} className="w-10 h-10 rounded-full" />
+                                        </>
+                                    ) : (
+                                        <>
+                                            <img src={selectedDoctor.user_picture} alt={selectedDoctor.user_name} className="w-10 h-10 rounded-full" />
+                                        </>
+                                    )}
+
                                     <div>
-                                        <h3 className="text-lg font-semibold">{selectedDoctor.doctor_name}</h3>
-                                        <p className="text-sm text-gray-600">{selectedDoctor.specialty}</p>
+                                        {userRole == "user" ? (
+                                            <>
+                                                <h3 className="text-lg font-semibold">{selectedDoctor.doctor_name}</h3>
+                                                <p className="text-sm text-gray-600">{selectedDoctor.specialty}</p>
+                                            </>
+                                        ) : (
+                                            <>
+                                                <h3 className="text-lg font-semibold">{selectedDoctor.user_name}</h3>
+                                                <p className="text-sm text-gray-600">{selectedDoctor.specialty}</p>
+                                            </>
+                                        )}
                                     </div>
                                 </div>
                                 <div className="flex-grow overflow-y-auto p-4 space-y-4">
@@ -173,10 +196,30 @@ const ChatSidebar = ({ isOpen, onClose }) => {
                                         >
 
                                             <div className="flex items-center space-x-3 bg-white p-3 rounded-lg hover:bg-emerald-100 transition-colors duration-300 border border-emerald-200">
-                                                <img src={doctor.doctor_picture} alt={doctor.doctor_name} className="w-12 h-12 rounded-full" />
+                                                {userRole == "user" ? (
+                                                    <>
+                                                        <img src={doctor.doctor_picture} alt={doctor.doctor_name} className="w-12 h-12 rounded-full" />
+                                                    </>
+                                                ) : (
+                                                    <>
+                                                        <img src={doctor.user_picture} alt={doctor.user_name} className="w-12 h-12 rounded-full" />
+                                                    </>
+                                                )}
+
                                                 <div className="flex-grow">
                                                     <div className="flex justify-between items-baseline">
-                                                        <p className="font-semibold text-emerald-800">{doctor.doctor_name}</p>
+                                                        {userRole == "user" ? (
+                                                            <>
+                                                                <p className="font-semibold text-emerald-800">{doctor.doctor_name}</p>
+                                                            </>
+                                                        )
+                                                            :
+                                                            (
+                                                                <>
+                                                                    <p className="font-semibold text-emerald-800">{doctor.user_name}</p>
+                                                                </>
+                                                            )}
+
                                                         <p className="text-xs text-emerald-600">
                                                             {doctor.time_last_message.substring(0, 5)}
                                                         </p>

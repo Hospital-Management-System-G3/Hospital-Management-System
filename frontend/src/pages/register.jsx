@@ -4,6 +4,7 @@ import { registerUser } from "./../slices/userSlice";
 import { useNavigate } from "react-router-dom";
 import loginImage from './../assets/images/sigin.png'; // تأكد من مسار الصورة
 
+
 const Register = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -28,6 +29,9 @@ const Register = () => {
     try {
       const resultAction = await dispatch(registerUser(formData));
       if (registerUser.fulfilled.match(resultAction)) {
+        const userRole = formData.role; // Assuming role is from the form data
+        dispatch(setUserRole(userRole)); // Set user role in Redux state
+        localStorage.setItem("userRole", userRole); // S
         navigate("/");
       } else {
         console.error(resultAction.payload);

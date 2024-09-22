@@ -2,7 +2,9 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "./../slices/userSlice";
 import { useNavigate } from "react-router-dom";
+
 import loginImage from './../assets/images/login.jpg';
+
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -29,6 +31,7 @@ const Login = () => {
       const userRole = result.role;
 
       localStorage.setItem("userRole", userRole);
+
       if (userRole === "admin") {
         navigate("/admin");
       } else {
