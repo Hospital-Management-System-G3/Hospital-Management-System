@@ -15,7 +15,7 @@ exports.registerUser = async (req, res) => {
 
     const user = result.rows[0];
     const token = jwt.sign(
-      { id: user.user_id, role: user.role },
+      { id: user.user_id, role: user.role  },
       process.env.JWT_SECRET
     );
 

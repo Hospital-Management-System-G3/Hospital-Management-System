@@ -1,9 +1,10 @@
 const express = require("express");
 const router = express.Router();
 const chatsController = require("../Controllers/chatsController");
+const  auth = require('./../middleware/auth');
 
 
-router.get("/getChats",chatsController.getChats);
-router.post("/addMessage",chatsController.addMessage);
+router.post("/getChats",auth, chatsController.getChats);
+router.post("/addMessage",auth, chatsController.addMessage);
 
 module.exports = router;

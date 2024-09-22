@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "./../slices/userSlice";
 import { useNavigate } from "react-router-dom";
+import { setUserRole, clearUserRole } from '../slices/roleSice'; // Adjust the path as necessary
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -27,6 +28,9 @@ const Login = () => {
       const result = await dispatch(loginUser(formData)).unwrap();
 
       const userRole = result.role;
+
+      localStorage.setItem("userRole", userRole);
+      dispatch(setUserRole(userRole));
 
       if (userRole === "admin") {
         navigate("/admin");
