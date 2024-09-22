@@ -12,10 +12,17 @@ import {
   ChevronRight,
   ChevronLeft,
 } from "lucide-react";
-import AppointmentManagement from "../admin/AppointmentManagement";
 import DashboardOverview from "../admin/DashboardOverview";
 import PatientManagement from "../admin/PatientManagement";
-// import other components like PatientManagement, Billing, StaffManagement, Reports
+import DoctorManagementPage from "./DoctorManagementPage/table";
+import NurseManagement from "./NurseManagement/full page";
+import CabinetRoompage from "../admin/CabinetRoompage";
+import LockerRoom from "../admin/LockerRoom";
+import AdminManagementPage from "../admin/AdminManagementPage";
+import SystemSettings from "../admin/Settings";
+import FeedbackPage from "../admin/FeedbackPage";
+import ReportPage from "../admin/ReportPage";
+import Billing from "../admin/BillingDashboard";
 
 const Sidebar = () => {
   const [expanded, setExpanded] = useState(false);
@@ -50,18 +57,24 @@ const Sidebar = () => {
         return <DashboardOverview />;
       case "User":
         return <PatientManagement />;
-      // case "Patient":
-      //   return <Billing />;
-      // case "Staff":
-      //   return <StaffManagement />;
-      // case "AppointmentManagement":
-      //   return <AppointmentManagement />;
-      // case "Billing":
-      //   return <Billing />;
-      // case "Reports":
-      //   return <Reports />;
-      // case "Settings":
-      //   return <Settings />;
+      case "Doctor":
+        return <DoctorManagementPage />;
+      case "Nurse":
+        return <NurseManagement />;
+      case "cabinet":
+        return <CabinetRoompage />;
+      case "Locker":
+        return <LockerRoom />;
+      case "Admin":
+        return <AdminManagementPage />;
+      case "Billing":
+        return <Billing />;
+      case "Reports":
+        return <ReportPage />;
+      case "Feedback":
+        return <FeedbackPage />;
+      case "Settings":
+        return <SystemSettings />;
       default:
         return <div>No Content Selected</div>;
     }
@@ -73,7 +86,7 @@ const Sidebar = () => {
         className={`w-${
           expanded ? "64" : "16"
         } bg-green-600 text-white p-4 flex flex-col space-y-8 transition-all duration-300 fixed top-0 left-0 h-screen`}
-        style={{ zIndex: 1000 }} // Ensure it's on top of other content
+        style={{ zIndex: 1000 }}
       >
         <div
           className="text-2xl font-bold cursor-pointer flex items-center justify-center w-full h-12 transition-all duration-300"
@@ -82,7 +95,7 @@ const Sidebar = () => {
           {expanded ? <ChevronLeft size={24} /> : <ChevronRight size={24} />}
         </div>
 
-        <nav className="flex flex-col items-stretch space-y-6">
+        <nav className="flex flex-col items-stretch space-y-4">
           <button
             className={`p-2 rounded-lg ${
               selectedMenu === "DashboardOverview"
@@ -121,57 +134,87 @@ const Sidebar = () => {
 
           <button
             className={`p-2 rounded-lg ${
-              selectedMenu === "Patient" ? "bg-green-500" : "hover:bg-green-500"
+              selectedMenu === "Doctor" ? "bg-green-500" : "hover:bg-green-500"
             } transition-colors flex items-center w-full`}
-            onClick={() => handleMenuSelect("Patient")}
-            onMouseEnter={() => handleMenuHover("Patient Management")}
+            onClick={() => handleMenuSelect("Doctor")}
+            onMouseEnter={() => handleMenuHover("Doctor Management")}
             onMouseLeave={() => handleMenuHover(null)}
           >
             <UserPlus size={20} />
-            {expanded && <span className="ml-2">Patient Management</span>}
-            {!expanded && hoveredMenu === "Patient Management" && (
+            {expanded && <span className="ml-2">Doctor Management</span>}
+            {!expanded && hoveredMenu === "Doctor Management" && (
               <span className="absolute ml-16 w-48 bg-green-500 p-2 rounded-lg">
-                Patient Management
+                Doctor Management
               </span>
             )}
           </button>
 
           <button
             className={`p-2 rounded-lg ${
-              selectedMenu === "Staff" ? "bg-green-500" : "hover:bg-green-500"
+              selectedMenu === "Nurse" ? "bg-green-500" : "hover:bg-green-500"
             } transition-colors flex items-center w-full`}
-            onClick={() => handleMenuSelect("Staff")}
-            onMouseEnter={() => handleMenuHover("Staff Management")}
+            onClick={() => handleMenuSelect("Nurse")}
+            onMouseEnter={() => handleMenuHover("Nurse Management")}
             onMouseLeave={() => handleMenuHover(null)}
           >
             <Users size={20} />
-            {expanded && <span className="ml-2">Staff Management</span>}
-            {!expanded && hoveredMenu === "Staff Management" && (
+            {expanded && <span className="ml-2">Nurse Management</span>}
+            {!expanded && hoveredMenu === "Nurse Management" && (
               <span className="absolute ml-16 w-48 bg-green-500 p-2 rounded-lg">
-                Staff Management
+                Nurse Management
               </span>
             )}
           </button>
 
           <button
             className={`p-2 rounded-lg ${
-              selectedMenu === "AppointmentManagement"
-                ? "bg-green-500"
-                : "hover:bg-green-500"
+              selectedMenu === "cabinet" ? "bg-green-500" : "hover:bg-green-500"
             } transition-colors flex items-center w-full`}
-            onClick={() => handleMenuSelect("AppointmentManagement")}
-            onMouseEnter={() => handleMenuHover("Appointment Management")}
+            onClick={() => handleMenuSelect("cabinet")}
+            onMouseEnter={() => handleMenuHover("Cabinet Room")}
             onMouseLeave={() => handleMenuHover(null)}
           >
-            <Calendar size={20} />
-            {expanded && <span className="ml-2">Appointment Management</span>}
-            {!expanded && hoveredMenu === "Appointment Management" && (
+            <Users size={20} />
+            {expanded && <span className="ml-2">Cabinet Room</span>}
+            {!expanded && hoveredMenu === "Cabinet Room" && (
               <span className="absolute ml-16 w-48 bg-green-500 p-2 rounded-lg">
-                Appointment Management
+                Cabinet Room
               </span>
             )}
           </button>
 
+          <button
+            className={`p-2 rounded-lg ${
+              selectedMenu === "Locker" ? "bg-green-500" : "hover:bg-green-500"
+            } transition-colors flex items-center w-full`}
+            onClick={() => handleMenuSelect("Locker")}
+            onMouseEnter={() => handleMenuHover("Locker Room")}
+            onMouseLeave={() => handleMenuHover(null)}
+          >
+            <Calendar size={20} />
+            {expanded && <span className="ml-2">Locker Room</span>}
+            {!expanded && hoveredMenu === "Locker Room" && (
+              <span className="absolute ml-16 w-48 bg-green-500 p-2 rounded-lg">
+                Locker Room
+              </span>
+            )}
+          </button>
+          <button
+            className={`p-2 rounded-lg ${
+              selectedMenu === "Admin" ? "bg-green-500" : "hover:bg-green-500"
+            } transition-colors flex items-center w-full`}
+            onClick={() => handleMenuSelect("Admin")}
+            onMouseEnter={() => handleMenuHover("Admin Management")}
+            onMouseLeave={() => handleMenuHover(null)}
+          >
+            <Calendar size={20} />
+            {expanded && <span className="ml-2">Admin Management</span>}
+            {!expanded && hoveredMenu === "Admin Management" && (
+              <span className="absolute ml-16 w-48 bg-green-500 p-2 rounded-lg">
+                Admin Management
+              </span>
+            )}
+          </button>
           <button
             className={`p-2 rounded-lg ${
               selectedMenu === "Billing" ? "bg-green-500" : "hover:bg-green-500"
@@ -217,7 +260,7 @@ const Sidebar = () => {
             onMouseLeave={() => handleMenuHover(null)}
           >
             <MessageSquare size={20} />
-            {expanded && <span className="ml-2">Feedback</span>}
+            {expanded && <span className="ml-2">User Message</span>}
             {!expanded && hoveredMenu === "Feedback" && (
               <span className="absolute ml-16 bg-green-500 p-2 rounded-lg">
                 Feedback
@@ -245,10 +288,10 @@ const Sidebar = () => {
           </button>
         </nav>
 
-        <button className="mt-auto p-2 rounded-lg hover:bg-green-500 transition-colors flex items-center w-full">
+        {/* <button className="mt-auto p-2 rounded-lg hover:bg-green-500 transition-colors flex items-center w-full">
           <LogOut size={20} />
           {expanded && <span className="ml-2">Logout</span>}
-        </button>
+        </button> */}
       </aside>
 
       {/* Main content area */}

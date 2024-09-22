@@ -1,8 +1,14 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { Heart, Award, Users, Clock, ChevronDown } from 'lucide-react';
+import React, { useState, useEffect } from "react";
+import { motion } from "framer-motion";
+import { Heart, Award, Users, Clock, ChevronDown } from "lucide-react";
+import axios from "axios";
 
 const AboutUsPage = () => {
+  const [mission, setMission] = useState("");
+  const [vision, setVision] = useState("");
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
   const pageVariants = {
     initial: { opacity: 0, y: 20 },
     in: { opacity: 1, y: 0 },
@@ -10,8 +16,8 @@ const AboutUsPage = () => {
   };
 
   const pageTransition = {
-    type: 'tween',
-    ease: 'anticipate',
+    type: "tween",
+    ease: "anticipate",
     duration: 0.5,
   };
 
@@ -35,19 +41,56 @@ const AboutUsPage = () => {
   };
 
   const stats = [
-    { icon: Heart, value: '10,000+', label: 'Patients Served' },
-    { icon: Award, value: '50+', label: 'Awards Won' },
-    { icon: Users, value: '200+', label: 'Expert Doctors' },
-    { icon: Clock, value: '24/7', label: 'Support' },
+    { icon: Heart, value: "10,000+", label: "Patients Served" },
+    { icon: Award, value: "50+", label: "Awards Won" },
+    { icon: Users, value: "200+", label: "Expert Doctors" },
+    { icon: Clock, value: "24/7", label: "Support" },
   ];
 
   const milestones = [
-    { year: '2010', event: 'Carelth founded with a mission to provide accessible healthcare' },
-    { year: '2015', event: 'Expanded services to include telemedicine and remote patient monitoring' },
-    { year: '2018', event: 'Opened state-of-the-art research facility for innovative medical solutions' },
-    { year: '2020', event: 'Launched mobile app for easy appointment booking and health tracking' },
-    { year: '2023', event: 'Established partnerships with leading hospitals worldwide' },
+    {
+      year: "2010",
+      event: "Carelth founded with a mission to provide accessible healthcare",
+    },
+    {
+      year: "2015",
+      event:
+        "Expanded services to include telemedicine and remote patient monitoring",
+    },
+    {
+      year: "2018",
+      event:
+        "Opened state-of-the-art research facility for innovative medical solutions",
+    },
+    {
+      year: "2020",
+      event:
+        "Launched mobile app for easy appointment booking and health tracking",
+    },
+    {
+      year: "2023",
+      event: "Established partnerships with leading hospitals worldwide",
+    },
   ];
+
+  useEffect(() => {
+    const fetchMissionVision = async () => {
+      try {
+        const response = await axios.get(
+          "http://localhost:5000/api/info-about"
+        );
+        const { our_mission, our_vision } = response.data;
+        setMission(our_mission);
+        setVision(our_vision);
+        setLoading(false);
+      } catch (err) {
+        setError("Failed to fetch mission and vision");
+        setLoading(false);
+      }
+    };
+
+    fetchMissionVision();
+  }, []);
 
   return (
     <motion.div
@@ -63,7 +106,8 @@ const AboutUsPage = () => {
         <div
           className="absolute inset-0 bg-cover bg-center"
           style={{
-            backgroundImage: 'url("https://images.unsplash.com/photo-1631217868264-e5b90bb7e133?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2091&q=80")',
+            backgroundImage:
+              'url("https://images.unsplash.com/photo-1631217868264-e5b90bb7e133?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2091&q=80")',
           }}
         />
         <div className="absolute inset-0 bg-emerald-900 opacity-50" />
@@ -104,17 +148,35 @@ const AboutUsPage = () => {
             animate="visible"
             className="grid grid-cols-1 md:grid-cols-2 gap-12"
           >
-            <motion.div variants={itemVariants} className="bg-white rounded-lg shadow-xl p-8">
-              <h2 className="text-3xl font-bold text-emerald-700 mb-4">Our Mission</h2>
-              <p className="text-lg text-gray-700">
-                At Carelth, our mission is to provide accessible, high-quality healthcare to all, leveraging cutting-edge technology and compassionate care to improve lives and build healthier communities.
-              </p>
+            <motion.div
+              variants={itemVariants}
+              className="bg-white rounded-lg shadow-xl p-8"
+            >
+              <h2 className="text-3xl font-bold text-emerald-700 mb-4">
+                Our Mission
+              </h2>
+              {loading ? (
+                <p>Loading...</p>
+              ) : error ? (
+                <p className="text-red-500">{error}</p>
+              ) : (
+                <p className="text-lg text-gray-700">{mission}</p>
+              )}
             </motion.div>
-            <motion.div variants={itemVariants} className="bg-white rounded-lg shadow-xl p-8">
-              <h2 className="text-3xl font-bold text-emerald-700 mb-4">Our Vision</h2>
-              <p className="text-lg text-gray-700">
-                We envision a world where everyone has access to personalized, efficient, and effective healthcare solutions, empowering individuals to lead healthier and happier lives.
-              </p>
+            <motion.div
+              variants={itemVariants}
+              className="bg-white rounded-lg shadow-xl p-8"
+            >
+              <h2 className="text-3xl font-bold text-emerald-700 mb-4">
+                Our Vision
+              </h2>
+              {loading ? (
+                <p>Loading...</p>
+              ) : error ? (
+                <p className="text-red-500">{error}</p>
+              ) : (
+                <p className="text-lg text-gray-700">{vision}</p>
+              )}
             </motion.div>
           </motion.div>
         </div>
@@ -144,7 +206,9 @@ const AboutUsPage = () => {
                 className="text-center"
               >
                 <stat.icon className="w-12 h-12 text-white mx-auto mb-4" />
-                <h3 className="text-3xl font-bold text-white mb-2">{stat.value}</h3>
+                <h3 className="text-3xl font-bold text-white mb-2">
+                  {stat.value}
+                </h3>
                 <p className="text-emerald-100">{stat.label}</p>
               </motion.div>
             ))}
@@ -176,10 +240,14 @@ const AboutUsPage = () => {
                 className="flex flex-col md:flex-row items-center "
               >
                 <div className="md:w-1/4 mb-4 md:mb-0">
-                  <div className="text-2xl font-bold text-emerald-500">{milestone.year}</div>
+                  <div className="text-2xl font-bold text-emerald-500">
+                    {milestone.year}
+                  </div>
                 </div>
                 <div className="md:w-3/4 md:pl-8 border-l-4 border-emerald-500">
-                  <p className="text-lg max-sm:text-sm max-sm:pl-2 text-gray-700">{milestone.event}</p>
+                  <p className="text-lg max-sm:text-sm max-sm:pl-2 text-gray-700">
+                    {milestone.event}
+                  </p>
                 </div>
               </motion.div>
             ))}
@@ -205,14 +273,39 @@ const AboutUsPage = () => {
             className="grid grid-cols-1 md:grid-cols-3 gap-12"
           >
             {[
-              { name: 'Dr. Emily Chen', role: 'Chief Medical Officer', image: 'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80' },
-              { name: 'Michael Thompson', role: 'Chief Technology Officer', image: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80' },
-              { name: 'Sarah Patel', role: 'Chief Operations Officer', image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1176&q=80' },
+              {
+                name: "Dr. Emily Chen",
+                role: "Chief Medical Officer",
+                image:
+                  "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80",
+              },
+              {
+                name: "Michael Thompson",
+                role: "Chief Technology Officer",
+                image:
+                  "https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80",
+              },
+              {
+                name: "Sarah Patel",
+                role: "Chief Operations Officer",
+                image:
+                  "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1176&q=80",
+              },
             ].map((member, index) => (
-              <motion.div key={index} variants={itemVariants} className="bg-white rounded-lg shadow-xl overflow-hidden">
-                <img src={member.image} alt={member.name} className="w-full h-64 object-cover" />
+              <motion.div
+                key={index}
+                variants={itemVariants}
+                className="bg-white rounded-lg shadow-xl overflow-hidden"
+              >
+                <img
+                  src={member.image}
+                  alt={member.name}
+                  className="w-full h-64 object-cover"
+                />
                 <div className="p-6">
-                  <h3 className="text-xl font-bold text-emerald-700 mb-2">{member.name}</h3>
+                  <h3 className="text-xl font-bold text-emerald-700 mb-2">
+                    {member.name}
+                  </h3>
                   <p className="text-gray-600">{member.role}</p>
                 </div>
               </motion.div>
@@ -238,7 +331,8 @@ const AboutUsPage = () => {
             transition={{ duration: 0.5, delay: 0.2 }}
             className="text-xl text-emerald-100 mb-8"
           >
-            Whether you're a patient, healthcare professional, or innovator, there's a place for you in the Carelth community.
+            Whether you're a patient, healthcare professional, or innovator,
+            there's a place for you in the Carelth community.
           </motion.p>
           <motion.button
             whileHover={{ scale: 1.05 }}
