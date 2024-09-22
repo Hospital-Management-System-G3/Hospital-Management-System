@@ -17,7 +17,7 @@ import Login from "./Pages/login";
 import HealthcareProviderDashboard from "./pages/doctorManage/doctorManage";
  
 import Admin from "./admin/HealthDashboard";
- 
+ import CheckoutPage from "./pages/checkout and payments";
 
 const App = () => {
   const location = useLocation();
@@ -39,7 +39,8 @@ const App = () => {
  
           <Route path="/admin" element={<Admin />} />
          <Route path="/doctor" element={<HealthcareProviderDashboard />} />
- 
+         <Route path="/CheckoutPage" element={<CheckoutPage />} />
+
          </Routes>
  
       </div>

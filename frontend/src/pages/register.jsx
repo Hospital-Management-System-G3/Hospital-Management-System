@@ -2,8 +2,7 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { registerUser } from "./../slices/userSlice";
 import { useNavigate } from "react-router-dom";
-import { setUserRole } from "../slices/roleSice"; // Make sure the path is correct
-
+import loginImage from './../assets/images/sigin.png'; // تأكد من مسار الصورة
 
 const Register = () => {
   const dispatch = useDispatch();
@@ -14,7 +13,6 @@ const Register = () => {
     username: "",
     email: "",
     password: "",
-    role: "user",
   });
 
   const handleChange = (e) => {
@@ -30,9 +28,6 @@ const Register = () => {
     try {
       const resultAction = await dispatch(registerUser(formData));
       if (registerUser.fulfilled.match(resultAction)) {
-        const userRole = formData.role; // Assuming role is from the form data
-        dispatch(setUserRole(userRole)); // Set user role in Redux state
-        localStorage.setItem("userRole", userRole); // S
         navigate("/");
       } else {
         console.error(resultAction.payload);
@@ -41,81 +36,70 @@ const Register = () => {
       console.error("Unexpected error:", err);
     }
   };
-  return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-50">
-      <div className="bg-white p-10 rounded-lg shadow-lg w-full max-w-md border border-gray-200">
-        <h2 className="text-3xl font-semibold text-gray-800 mb-6">
-          Create an Account
-        </h2>
-        {error && <p className="text-red-600 mb-4">{error}</p>}
-        {success && <p className="text-green-600 mb-4">{success}</p>}
-        <form onSubmit={handleRegister}>
-          <div className="mb-5">
-            <label
-              htmlFor="username"
-              className="block text-gray-700 font-medium mb-1"
-            >
-              Username
-            </label>
-            <input
-              type="text"
-              id="username"
-              name="username"
-              value={formData.username}
-              onChange={handleChange}
-              className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              required
-            />
-          </div>
-          <div className="mb-5">
-            <label
-              htmlFor="email"
-              className="block text-gray-700 font-medium mb-1"
-            >
-              Email
-            </label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              required
-            />
-          </div>
-          <div className="mb-5">
-            <label
-              htmlFor="password"
-              className="block text-gray-700 font-medium mb-1"
-            >
-              Password
-            </label>
-            <input
-              type="password"
-              id="password"
-              name="password"
-              value={formData.password}
-              onChange={handleChange}
-              className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              required
-            />
-          </div>
 
-          <button
-            type="submit"
-            className="w-full bg-blue-600 text-white p-3 rounded-lg font-semibold hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
-          >
-            Register
-          </button>
-        </form>
-        <div className="mt-6 text-center">
-          <p className="text-gray-600">
-            Already have an account?{" "}
-            <a href="/" className="text-blue-600 hover:underline">
-              Login
-            </a>
-          </p>
+  return (
+    <div className="bg-gray-100 min-h-screen flex items-center justify-center py-6 px-4 lg:px-0">
+      <div className="w-full max-w-screen-lg mx-auto bg-white shadow-lg flex flex-col lg:flex-row rounded-lg overflow-hidden">
+        <div className="w-full lg:w-1/2 p-4 flex flex-col items-center">
+          <h2 className="text-3xl font-semibold text-gray-800 mb-4">
+            Create an Account
+          </h2>
+          {error && <p className="text-red-600 mb-4">{error}</p>}
+          {success && <p className="text-green-600 mb-4">{success}</p>}
+          <form onSubmit={handleRegister} className="mt-4 w-full max-w-sm flex flex-col gap-2">
+            <label htmlFor="username" className="block text-gray-700 font-medium mb-1">
+              Username
+              <input
+                type="text"
+                id="username"
+                name="username"
+                value={formData.username}
+                onChange={handleChange}
+                className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                required
+              />
+            </label>
+            <label htmlFor="email" className="block text-gray-700 font-medium mb-1">
+              Email
+              <input
+                type="email"
+                id="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                required
+              />
+            </label>
+            <label htmlFor="password" className="block text-gray-700 font-medium mb-1">
+              Password
+              <input
+                type="password"
+                id="password"
+                name="password"
+                value={formData.password}
+                onChange={handleChange}
+                className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                required
+              />
+            </label>
+
+            <button
+              type="submit"
+              className="mt-4 tracking-wide font-semibold bg-emerald-500 text-white w-full py-2 rounded-lg hover:bg-emerald-600 transition-all duration-300 ease-in-out flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-blue-500"
+            >
+              Register
+            </button>
+            <p className="mt-4 text-xs text-gray-600 text-center">
+              Already have an account?{" "}
+              <a href="/" className="text-blue-600 hover:underline">
+                Login
+              </a>
+            </p>
+          </form>
+        </div>
+        <div className="w-full lg:w-1/2">
+          <img src={loginImage} className="w-full h-full object-cover" alt="Register" />
         </div>
       </div>
     </div>
