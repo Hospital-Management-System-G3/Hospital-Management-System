@@ -56,10 +56,10 @@ const PatientProfilePage = () => {
     name: user.username,
     user_id: user.user_id,
     medical_history: record.medical_history,
-    date_of_birth: record.date_of_birth.substring(0, 10),
+    date_of_birth: record.date_of_birth,
     gender: record.gender,
     height: record.height,
-    weight: record.weight[record.weight.length-1],
+    weight: record.weight,
     blood_type: record.blood_type,
     allergies: record.allergies,
     emergency_contact: "Jane Doe (+1 555-987-6543)"
