@@ -1,7 +1,7 @@
 const pool = require("./../config/db");
 
 exports.getChats = async (req, res) => {
-    console.log("inside chat controller");
+    // console.log("inside chat controller");
     try {
         const userId = req.user.id;
         const userRole = req.user.role;
@@ -28,19 +28,19 @@ exports.getChats = async (req, res) => {
 };
 
 exports.addMessage = async (req, res) => {
-    console.log("inside addMessage controller");
+    // console.log("inside addMessage controller");
 
     try {
-        const {text,chat_id} = req.body;
+        const { message } = req.body;
 
 
         const userId = req.user.id;
         const userRole = req.user.role;
 
-        console.log(message.text);
-        console.log(message.chatId);
-        console.log(userId);
-        console.log(userRole);
+        // console.log(message.text);
+        // console.log(message.chatId);
+        // console.log(userId);
+        // console.log(userRole);
 
         const currentTime = new Date();
         const timeString = currentTime.toTimeString().split(' ')[0];
@@ -50,10 +50,10 @@ exports.addMessage = async (req, res) => {
                 [message.chatId, message.text, "User", timeString]
             );
         }
-        else{
+        else {
             const chatsResult = await pool.query(`INSERT INTO public.messages(  chat_id, text, sender, "time") VALUES ($1, $2, $3, $4) RETURNING *`,
-            [message.chatId, message.text, "Doctor", timeString]
-        );
+                [message.chatId, message.text, "Doctor", timeString]
+            );
         }
 
 

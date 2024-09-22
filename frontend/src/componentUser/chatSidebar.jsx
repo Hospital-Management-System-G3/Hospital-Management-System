@@ -16,7 +16,7 @@ const ChatSidebar = ({ isOpen, onClose }) => {
     const [chatId, setchatId] = useState();
     const messagesEndRef = useRef(null);
 
-    console.log(userRole);
+    // console.log(userRole);
     console.log(chats, messages_);
     // console.log(inputMessage);
 
@@ -51,15 +51,18 @@ const ChatSidebar = ({ isOpen, onClose }) => {
 
     const handleSendMessage = async (message, chatId) => {
         if (inputMessage.trim() !== '') {
+
+
             const newMessage = {
-                sender: 'User',
+                sender: userRole === "user" ? 'User' : 'Doctor',
                 text: inputMessage,
                 time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
             };
+
             setMessages(prevMessages => [...prevMessages, newMessage]);
             setInputMessage('');
 
-            console.log(chatId);
+            console.log(message, chatId);
 
             try {
                 await dispatch(addMessage({ text: message, chatId: chatId }));
@@ -158,7 +161,7 @@ const ChatSidebar = ({ isOpen, onClose }) => {
                                         type="text"
                                         value={inputMessage}
                                         onChange={(e) => setInputMessage(e.target.value)}
-                                        onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
+                                        onKeyPress={(e) => e.key === 'Enter' && handleSendMessage(inputMessage, chatId)}
                                         placeholder="Type a message..."
                                         className="flex-grow p-2 border rounded-l-lg focus:outline-none focus:ring-2 focus:ring-emerald-300"
                                     />
