@@ -6,4 +6,6 @@ const contactController = require("../Controllers/contactController");
 router.get("/contacts", contactController.getContacts);
 router.post("/contacts/:id/reply", contactController.replyToFeedback);
 
+router.post("/submit", contactController.submitContact);
+
 module.exports = router;
