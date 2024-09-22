@@ -1,12 +1,29 @@
-import React, { useState } from 'react';
-import { Menu, X } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Link } from 'react-router-dom'; // Import Link for navigation
+ 
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { Menu, X } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 import logo from "../assets/logo.png";
 
 const Header = () => {
-    const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const [logoImage, setLogoImage] = useState(logo);
 
+  useEffect(() => {
+    const fetchLogo = async () => {
+      try {
+        const response = await axios.get(
+          "http://localhost:5000/api/settings/get"
+        );
+        setLogoImage(`http://localhost:5000/${response.data.logo_image}`);
+      } catch (error) {
+        console.error("Error fetching logo:", error);
+      }
+    };
+ 
+    fetchLogo();
+  }, []);
+ 
     return (
         <motion.header
             initial={{ y: -100 }}
@@ -97,6 +114,7 @@ const Header = () => {
             </AnimatePresence>
         </motion.header>
     );
+ 
 };
 
 export default Header;
