@@ -8,14 +8,15 @@ import axios from 'axios';
 
 const PatientProfilePage = () => {
   const dispatch = useDispatch();
-  const { user, record, bills, health, loading, error } = useSelector((state) => ({
+  const { user, record, bills, loading, error } = useSelector((state) => ({
     user: state.patientRecord.user,
     record: state.patientRecord.record,
     bills: state.patientRecord.bills,
-    health: state.patientRecord.health,
     loading: state.patientRecord.loading,
     error: state.patientRecord.error
   }));
+
+  // console.log(record);
 
   const [activeTab, setActiveTab] = useState('overview');
   const [showInputs, setShowInputs] = useState(false);
@@ -48,17 +49,17 @@ const PatientProfilePage = () => {
 
 
   // console.log({ user, record, bills  });
-  console.log({ health });
+  console.log(record);
 
 
   const patientData = {
     name: user.username,
     user_id: user.user_id,
     medical_history: record.medical_history,
-    date_of_birth: record.date_of_birth,
+    date_of_birth: record.date_of_birth.substring(0, 10),
     gender: record.gender,
     height: record.height,
-    weight: record.weight,
+    weight: record.weight[record.weight.length-1],
     blood_type: record.blood_type,
     allergies: record.allergies,
     emergency_contact: "Jane Doe (+1 555-987-6543)"
@@ -88,13 +89,15 @@ const PatientProfilePage = () => {
       transition: { duration: 0.8, ease: "easeInOut" }
     }
   };
+  
 
-  const formattedHealthData = health.map(record => ({
-    date: new Date(record.date).toISOString().split('T')[0],
-    temperature: parseFloat(record.temperature),
-    bloodPressure: record.blood_pressure,
-    weight: record.weight
-  }));
+  const formattedHealthData = record.date ? record.date.map((date, index) => ({
+    date: new Date(date).toISOString().split('T')[0],
+    temperature: parseFloat(record.temperature?.[index] || 0),
+    bloodPressure: record.blood_pressure?.[index] || 0,
+    weight: record.weight?.[index] || 0,
+  })) : [];
+  
 
   const addHealthData = () => {
     if (newTemperature || newBloodPressure || newWeight) {

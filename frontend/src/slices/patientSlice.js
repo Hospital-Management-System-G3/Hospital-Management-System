@@ -8,7 +8,6 @@ const initialState = {
     user: {},
     record: {},
     bills: [],
-    health: [],
 };
 
 export const getRecord = createAsyncThunk(
@@ -16,7 +15,7 @@ export const getRecord = createAsyncThunk(
     async (_, { rejectWithValue }) => {
         try {
             // console.log("Starting API call");
-            const response = await axios.get("http://localhost:5000/api/record/getRecord");
+            const response = await axios.get("http://localhost:5000/api/record/getRecord",{ withCredentials: true });
             // console.log("API Response:", response.data);
             return response.data;
         } catch (err) {
@@ -34,7 +33,6 @@ const patientSlice = createSlice({
         user: [],
         record: [],
         bills: [],
-        health: [],
         loading: false,
         error: null,
     },
@@ -51,7 +49,6 @@ const patientSlice = createSlice({
                 state.user = action.payload.userData[0];  // Assuming you want the first (and only) user
                 state.record = action.payload.userRecord[0];  // Assuming you want the first (and only) record
                 state.bills = action.payload.userBills;
-                state.health = action.payload.userHealthRecord;
                 // console.log("Updated state:", state);  // Add this log
             })
             .addCase(getRecord.rejected, (state, action) => {
