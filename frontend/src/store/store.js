@@ -8,11 +8,17 @@
 import { configureStore } from "@reduxjs/toolkit";
 import authReducer from "../slices/userSlice.js";
 import doctorData from "../slices/doctorSlice.js";
- 
+import contactReducer from "../slices/contactSlice.js";
+import chatsReducer from "../slices/chatsSlice.js";
+import patientReducer from "../slices/patientSlice.js"; 
+
 const store = configureStore({
   reducer: {
     auth: authReducer,
     doctorData: doctorData,
+    contact: contactReducer,
+    chats: chatsReducer,
+    patientRecord: patientReducer,
     
   },
 });

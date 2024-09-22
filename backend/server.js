@@ -31,10 +31,20 @@ pool.query("SELECT NOW()", (err, res) => {
     console.log("DB connected at:", res.rows[0].now);
   }
 });
+
 const userRoute = require("./Routes/userRoute");
 const doctorRoutes = require("./Routes/doctorRoutes");
 app.use("/api/users", userRoute);
 app.use("/api", doctorRoutes);
+
+const contactRouter = require("./Routes/contactRoutes");
+app.use('/api/contact', contactRouter);
+
+const chatRouter = require("./Routes/chatRouter");
+app.use('/api/chats', chatRouter);
+
+const recordRouter = require("./Routes/recordRouter");
+app.use('/api/record', recordRouter);
 
 // Routes
 app.get("/", (req, res) => {
