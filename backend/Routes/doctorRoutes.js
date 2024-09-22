@@ -10,6 +10,7 @@ const { addPatientRecord } = require("../Controllers/addnewpatient");
 const { doctorAvailabilities } = require("../Controllers/doctorAvailabilities");
 const { deleteTime } = require("../Controllers/softDeleteTime");
 const { addDoctorAvailability } = require("../Controllers/addNewTime");
+const { fetchDoctorBillingDetails } = require("../Controllers/fetchDoctorBillingDetails");
 
  router.get("/doctorData", auth ,doctorData );
 router.get("/records",  allRecords );
@@ -19,6 +20,7 @@ router.post('/addrecord', addPatientRecord);
 router.get('/doctorAvailabilities', auth , doctorAvailabilities);
 router.post('/deleteTime/:availability_id', deleteTime );
 router.post('/addAvailability/',auth, addDoctorAvailability );
+router.get('/fetchDatabooked', auth, fetchDoctorBillingDetails);
  
 
 
