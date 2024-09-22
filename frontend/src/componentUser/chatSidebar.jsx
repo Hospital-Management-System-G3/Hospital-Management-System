@@ -54,7 +54,7 @@ const ChatSidebar = ({ isOpen, onClose }) => {
             setMessages(prevMessages => [...prevMessages, newMessage]);
             setInputMessage('');
 
-            console.log(message, chatId);
+            console.log(chatId);
 
             try {
                 await dispatch(addMessage({ text: message, chatId: chatId }));

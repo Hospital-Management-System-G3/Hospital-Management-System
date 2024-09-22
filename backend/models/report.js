@@ -17,7 +17,7 @@ const createReportTable = async () => {
       FOREIGN KEY (feedback_id) REFERENCES feedback(feedback_id)
   );
   `;
- 
+
   try {
     // Execute the query to create the report table
     await pool.query(query);
