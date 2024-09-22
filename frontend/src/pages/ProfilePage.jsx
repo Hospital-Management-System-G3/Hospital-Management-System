@@ -65,6 +65,8 @@ const PatientProfilePage = () => {
     emergency_contact: "Jane Doe (+1 555-987-6543)"
   };
 
+  // date_of_birth: record.date_of_birth.substring(0, 10),
+  // weight: record.weight[record.weight.length-1],
 
   const appointments = [
     { id: 1, date: '2023-06-01', time: '10:00 AM', doctor: 'Dr. Smith', department: 'Cardiology', room: 'Room 301', duration: '30 minutes' },
