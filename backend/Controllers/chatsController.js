@@ -31,7 +31,8 @@ exports.addMessage = async (req, res) => {
     console.log("inside addMessage controller");
 
     try {
-        const { message } = req.body;
+        const {text,chat_id} = req.body;
+
 
         const userId = req.user.id;
         const userRole = req.user.role;
@@ -58,10 +59,6 @@ exports.addMessage = async (req, res) => {
 
         const updateLastMessage = await pool.query(`UPDATE chats SET last_message='${message.text}' , time_last_message='${timeString}' WHERE chat_id=${message.chatId} `,);
 
-
-        // Log the rows to verify the output
-        // console.log("Chats:", chats);
-        // console.log("Messages:", messages);
 
         res.status(200).json(""); // Return the chats and messages
     } catch (err) {

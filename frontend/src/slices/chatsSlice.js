@@ -28,6 +28,7 @@ export const addMessage = createAsyncThunk(
     "chats/addMessage",
     async (message) => {
         try {
+
             console.log(message);
             const response = await axios.post("http://localhost:5000/api/chats/addMessage", { message },{ withCredentials: true });
             return response.data;
