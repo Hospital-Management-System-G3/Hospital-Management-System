@@ -11,9 +11,10 @@ const initialState = {
 
 export const getChats = createAsyncThunk(
     "chats/getChats",
-    async (_, { rejectWithValue }) => {
+    async (userRole, { rejectWithValue }) => {
         try {
-            const response = await axios.get("http://localhost:5000/api/chats/getChats");
+            const response = await axios.post("http://localhost:5000/api/chats/getChats", { userRole },{ withCredentials: true });
+            console.log(userRole);
             return response.data;
         } catch (err) {
             return rejectWithValue(
@@ -25,10 +26,10 @@ export const getChats = createAsyncThunk(
 
 export const addMessage = createAsyncThunk(
     "chats/addMessage",
-    async (message)=> {
+    async (message) => {
         try {
-            console.log(message );
-            const response = await axios.post("http://localhost:5000/api/chats/addMessage", { message });
+            console.log(message);
+            const response = await axios.post("http://localhost:5000/api/chats/addMessage", { message },{ withCredentials: true });
             return response.data;
         } catch (err) {
             console.log(err);

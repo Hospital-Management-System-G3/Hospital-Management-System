@@ -6,7 +6,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { setUserRole, clearUserRole } from '../slices/roleSice'; // Adjust the path as necessary
 import logo from "../assets/logo.png";
-
+ 
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -28,6 +28,7 @@ const Header = () => {
     fetchLogo();
 
     const role = localStorage.getItem("userRole");
+    console.log(role);
     if (role) {
       dispatch(setUserRole(role)); // Update role in Redux state
     }

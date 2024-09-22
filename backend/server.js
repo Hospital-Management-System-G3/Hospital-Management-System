@@ -10,7 +10,7 @@ const infoContactRoutes = require("./Routes/infoContactRoutes");
 const settingsRoutes = require("./Routes/settingsRoutes");
 const contactRoutes = require("./Routes/contactRoutes");
 const feedbackRoutes = require("./Routes/feedbackRoutes");
-
+const Stripe = require("stripe");
 app.use(bodyParser.json());
 const path = require("path");
 app.use(cookieParser());
@@ -31,10 +31,17 @@ pool.query("SELECT NOW()", (err, res) => {
     console.log("DB connected at:", res.rows[0].now);
   }
 });
-
+// obada
 const userRoute = require("./Routes/userRoute");
+const payment = require("./Routes/paymentRoutes");
+const booking = require("./Routes/bookingRoute");
+app.use('/api/users' , userRoute)
+app.use("/api/auth", payment);
+app.use("/api/book", booking);
+
+
+
 const doctorRoutes = require("./Routes/doctorRoutes");
-app.use("/api/users", userRoute);
 app.use("/api", doctorRoutes);
 
 const contactRouter = require("./Routes/contactRoutes");
