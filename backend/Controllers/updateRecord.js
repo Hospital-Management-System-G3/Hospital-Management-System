@@ -3,13 +3,13 @@ const pool = require("./../config/db");
 // Controller to update a patient's record
 const updatePatientRecord = async (req, res) => {
   const { record_id } = req.params; // Record ID from the request URL
-  const { medical_history, treatment_plan, allergies, notes } = req.body; // Fields to update
+  const { medical_history, treatment_plan, allergies, notes, blood_pressure, temperature } = req.body; // Fields to update
 
   try {
     // Update the record with the new data
     const result = await pool.query(
-      'UPDATE patient_records SET medical_history = $1, treatment_plan = $2, allergies = $3, notes = $4 WHERE record_id = $5 RETURNING *',
-      [medical_history, treatment_plan, allergies, notes, record_id]
+      'UPDATE patient_records SET medical_history = $1, treatment_plan = $2, allergies = $3, notes = $4, blood_pressure = $5, temperature = $6 WHERE record_id = $7 RETURNING *',
+      [medical_history, treatment_plan, allergies, notes, blood_pressure, temperature, record_id]
     );
 
     if (result.rowCount === 0) {

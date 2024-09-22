@@ -11,9 +11,9 @@ const doctorAvailabilities = async (req, res) => {
       SELECT * 
       FROM doctor_availabilities
       WHERE doctor_id = $1
-        AND is_deleted = FALSE
-        AND status = 'active'
-        AND is_booked = FALSE;
+      AND is_deleted = FALSE
+      AND status = 'active'
+      AND is_booked = FALSE;
 
     `;
 

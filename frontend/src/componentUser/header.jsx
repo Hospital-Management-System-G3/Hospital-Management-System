@@ -6,6 +6,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { setUserRole, clearUserRole } from '../slices/roleSice'; // Adjust the path as necessary
 import logo from "../assets/logo.png";
+ 
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -44,15 +45,17 @@ const Header = () => {
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ type: "spring", stiffness: 300, damping: 30 }}
-      className="bg-gradient-to-r from-emerald-500 to-teal-600 shadow-lg sticky top-0 z-50 text-white px-4 sm:px-6 lg:px-16"
+      className="bg-transparent shadow-lg sticky top-0 z-50 text-emerald-500 px-4 sm:px-6 lg:px-16"
     >
-      <nav className="container mx-auto py-4">
+
+{/* bg-gradient-to-r from-emerald-500 to-teal-600  */}
+      <nav className="fixed container mx-auto py-4">
         <div className="flex justify-between items-center">
           <motion.div className="flex items-center" whileHover={{ scale: 1.05 }}>
             <div className='w-10 h-10'>
               <img src={logoImage} alt="Carelth Logo" className="mr-2 rounded-full" />
             </div>
-            <div className="text-lg sm:text-2xl font-bold">Carelth</div>
+            <div className="text-lg sm:text-2xl font-bold">BraveHearts</div>
           </motion.div>
 
           <div className="hidden md:flex space-x-6 text-sm md:text-base">
@@ -93,7 +96,7 @@ const Header = () => {
               </>
             ) : (
               <motion.button
-                className="bg-red-500 text-white px-4 py-2 rounded-full hover:bg-red-600 transition duration-300 font-semibold shadow-md"
+                className="bg-emerald-500 text-white px-4 py-2 rounded-full hover:bg-green-300 transition duration-300 font-semibold shadow-md"
                 onClick={handleLogout}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
@@ -153,7 +156,7 @@ const Header = () => {
 
             {userRole && (
               <motion.button
-                className="mt-4 w-full bg-red-500 text-white px-6 py-3 rounded-full hover:bg-red-600 transition duration-300 font-semibold"
+                className="mt-4 w-full bg-green-500 text-white px-6 py-3 rounded-full hover:bg-green-600 transition duration-300 font-semibold"
                 onClick={handleLogout}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}

@@ -1,6 +1,5 @@
- 
- const pool = require('../config/db');
- 
+const pool = require('../config/db');
+
 const createPatientRecordsTable = async () => {
   const query = `
     CREATE TABLE IF NOT EXISTS patient_records (
@@ -13,16 +12,17 @@ const createPatientRecordsTable = async () => {
       notes TEXT,
       gender VARCHAR(10),
       height INTEGER,
-      weight INTEGER,
+      weight INTEGER[],           -- Make weight an array of integers
       blood_type VARCHAR(5),
       allergies TEXT,
+      temperature DECIMAL(4, 2)[], -- Make temperature an array of decimal values
+      blood_pressure INTEGER[],    -- Make blood_pressure an array of integers
       created_at TIMESTAMP DEFAULT NOW(),
       is_deleted BOOLEAN DEFAULT false
     );
   `;
 
   try {
-   
     await pool.query(query);
     console.log('patient_records table created or already exists');
   } catch (error) {
@@ -30,10 +30,9 @@ const createPatientRecordsTable = async () => {
   }
 };
 
- 
 const init = async () => {
   await createPatientRecordsTable();
   process.exit(); 
 };
- 
+
 init();
