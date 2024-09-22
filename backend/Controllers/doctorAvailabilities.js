@@ -12,7 +12,9 @@ const doctorAvailabilities = async (req, res) => {
       FROM doctor_availabilities
       WHERE doctor_id = $1
         AND is_deleted = FALSE
+        AND status = 'active'
         AND is_booked = FALSE;
+
     `;
 
     // Execute the query with the doctor_id parameter
@@ -31,5 +33,7 @@ const doctorAvailabilities = async (req, res) => {
     res.status(500).json({ error: 'Error fetching doctor availabilities' });
   }
 };
+
+
 
 module.exports = { doctorAvailabilities };

@@ -4,6 +4,7 @@ import axios from 'axios';
 
 function Appointments() {
   const [data, setData] = useState([]);
+  const [databooked, setDatabooked] = useState([]);
   const [showAddForm, setShowAddForm] = useState(false);
   const [newAppointment, setNewAppointment] = useState({
     timeFrom: '',
@@ -18,6 +19,19 @@ function Appointments() {
     try {
       const response = await axios.get("http://localhost:5000/api/doctorAvailabilities", { withCredentials: true });
       setData(response.data);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  }, []);
+
+
+
+  const fetchDatabooked= useCallback(async () => {
+    try {
+   
+
+      const response = await axios.get("http://localhost:5000/api/fetchDatabooked", { withCredentials: true });
+      setDatabooked(response.data);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -75,6 +89,7 @@ function Appointments() {
   useEffect(() => {
     fetchData();
     handleSubmit();
+    fetchDatabooked();
   }, [fetchData]);
 
  
@@ -195,6 +210,56 @@ function Appointments() {
           </table>
         </div>
       </div>
+
+{/* >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> */}
+<div className="relative overflow-x-auto overflow-y-auto h-80">
+  <div className="flex items-center mb-6">
+    <h2 className="text-2xl mr-4 font-semibold text-green-700 text-center md:text-left">
+      Your booked appointments
+    </h2>
+  </div>
+
+  <div className="overflow-x-auto">
+    <table className="w-full border-collapse border border-green-200 bg-white rounded-lg overflow-hidden">
+      <thead>
+      <tr className="bg-green-100">
+                <th className="border border-green-200 p-3 text-left">Billing ID</th>
+                <th className="border border-green-200 p-3 text-left">Patient Name</th>
+                <th className="border border-green-200 p-3 text-left">Patient Email</th>
+                <th className="border border-green-200 p-3 text-left">Date</th>
+                <th className="border border-green-200 p-3 text-left">Time</th>
+                <th className="border border-green-200 p-3 text-left">Service Type</th>
+                <th className="border border-green-200 p-3 text-left">Total Price</th>
+                <th className="border border-green-200 p-3 text-left">Doctor Profit</th>
+                <th className="border border-green-200 p-3 text-left">Hospital Profit</th>
+                <th className="border border-green-200 p-3 text-left">status</th>
+                <th className="border border-green-200 p-3 text-left">Action</th>
+              </tr>
+      </thead>
+      <tbody>
+      {databooked.map((billing, index) => (
+                <tr key={index} className="hover:bg-green-50 transition-colors duration-200">
+                  <td className="border border-green-200 p-3">{billing.billing_id}</td>
+                  <td className="border border-green-200 p-3">{billing.patient_name}</td>
+                  <td className="border border-green-200 p-3">{billing.patient_email}</td>
+                  <td className="border border-green-200 p-3">{formatDate(billing.available_date)}</td>
+                  <td className="border border-green-200 p-3">{`${billing.available_time_from} - ${billing.available_time_to}`}</td>
+                  <td className="border border-green-200 p-3">{billing.service_type}</td>
+                  <td className="border border-green-200 p-3">${billing.total_price}</td>
+                  <td className="border border-green-200 p-3">${billing.doctor_profit}</td>
+                  <td className="border border-green-200 p-3">${billing.hospital_profit}</td>
+                  <td className="border border-green-200 p-3">${billing.status}</td>
+                  <td className="border border-green-200 p-3">
+                    <Button onClick={() => completed(billing.billing_id)}>completed</Button>
+                  </td>
+                </tr>
+              ))}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+      
     </>
   );
 }
