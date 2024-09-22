@@ -26,13 +26,19 @@ exports.addMessage = async (req, res) => {
 
 
     try {
-        const {text,chat_id} = req.body;
+        const { message } = req.body;
 
-        // console.log(message);
+        console.log(message.text);
+        console.log(message.chatId);
 
-        // const chatsResult = await pool.query(`INSERT INTO public.messages(  chat_id, text, sender, "time") VALUES ($1, $2, $3, $4) RETURNING *`,
-        //     []
-        // );
+        const currentTime = new Date();
+        const timeString = currentTime.toTimeString().split(' ')[0];
+
+        const chatsResult = await pool.query(`INSERT INTO public.messages(  chat_id, text, sender, "time") VALUES ($1, $2, $3, $4) RETURNING *`,
+            [message.chatId, message.text, "User", timeString]
+        );
+
+        const updateLastMessage = await pool.query(`UPDATE chats SET last_message='${message.text}' , time_last_message='${timeString}' WHERE chat_id=${message.chatId} `,);
 
 
         // Log the rows to verify the output
