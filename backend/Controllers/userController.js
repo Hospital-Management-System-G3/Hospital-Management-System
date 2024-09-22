@@ -54,7 +54,7 @@ exports.loginUser = async (req, res) => {
       secure: process.env.NODE_ENV === "production", // Set secure flag if in production
       sameSite: "Lax",
     });
-    res.status(200).json({ message: "Logged in successfully" });
+    res.status(200).json({ message: "Logged in successfully", role: user.role });
   } catch (err) {
     res.status(500).json({ error: "Error logging in" });
   }

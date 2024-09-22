@@ -27,6 +27,7 @@ const Header = () => {
     fetchLogo();
 
     const role = localStorage.getItem("userRole");
+    console.log(role);
     if (role) {
       dispatch(setUserRole(role)); // Update role in Redux state
     }
