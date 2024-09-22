@@ -19,10 +19,16 @@ export const loginUser = createAsyncThunk(
         { withCredentials: true }
       );
       console.log("Login Response:", response.data);
-      return response.data; 
+
+      const { role } = response.data;
+      localStorage.setItem("userRole", role);
+
+      return response.data;
     } catch (error) {
       console.log("Login Error:", error);
-      return rejectWithValue(error.response?.data?.message || "Error logging in");
+      return rejectWithValue(
+        error.response?.data?.message || "Error logging in"
+      );
     }
   }
 );

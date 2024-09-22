@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "./../slices/userSlice";
@@ -21,18 +20,24 @@ const Login = () => {
       [name]: value,
     });
   };
- const handleLogin = async (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    
+
     try {
       const result = await dispatch(loginUser(formData)).unwrap();
-      navigate("/home"); 
+
+      const userRole = result.role;
+
+      if (userRole === "admin") {
+        navigate("/admin");
+      } else {
+        navigate("/");
+      }
     } catch (error) {
       console.log("Login failed:", error.message || error);
     }
   };
-  
-  
+
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-100">
       <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
