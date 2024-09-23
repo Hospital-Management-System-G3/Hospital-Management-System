@@ -16,6 +16,12 @@ const path = require("path");
 app.use(cookieParser());
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 // Middleware
+const CatalogeRoute = require('./Routes/CatalogeRoutehusban'); 
+const dooctorRoutes = require('./routes/doctorRoutes');
+const feeedbackRoutes = require('./routes/feedbackRouteshusban');
+const reportRoutes = require('./routes/reportRouteshusabn');
+
+
 
 app.use(
   cors({
@@ -38,6 +44,12 @@ const booking = require("./Routes/bookingRoute");
 app.use('/api/users' , userRoute)
 app.use("/api/auth", payment);
 app.use("/api/book", booking);
+
+
+app.use('/api/users', CatalogeRoute);
+app.use('/api/doctors', dooctorRoutes);
+app.use('/api/feedback', feeedbackRoutes);
+app.use('/api/report', reportRoutes);
 
 
 
@@ -67,6 +79,7 @@ app.use("/api", infoContactRoutes);
 app.use("/api/settings", settingsRoutes);
 app.use("/api", contactRoutes);
 app.use("/api", feedbackRoutes);
+
 
 // Start the server
 const PORT = process.env.PORT || 5000;

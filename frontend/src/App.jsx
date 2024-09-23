@@ -16,6 +16,10 @@ import Login from "./Pages/login";
 import HealthcareProviderDashboard from "./pages/doctorManage/doctorManage";
 import Admin from "./admin/HealthDashboard";
 import CheckoutPage from "./pages/checkout and payments";
+import Catalog from "./pages/Catalog";
+
+import {UserDetail} from './pages/UserDetailComponent';
+
 
 const App = () => {
   const location = useLocation();
@@ -40,6 +44,9 @@ const App = () => {
           <Route path="/admin" element={<Admin />} />
           <Route path="/doctor" element={<HealthcareProviderDashboard />} />
           <Route path="/CheckoutPage" element={<CheckoutPage />} />
+          <Route path="/Catalog" element={<Catalog />} />
+          <Route path="/details/:username" element={<UserDetail doctorId={65} />} />
+    
         </Routes>
       </div>
       {!hideHeaderFooter && <Footer />}
