@@ -8,16 +8,43 @@ import { setUserRole, clearUserRole } from '../slices/roleSice';
 import { Heart, Activity, Clipboard, Hospital, Calendar, Users, HeartPulse, Stethoscope, Thermometer, Pill, BriefcaseMedical, Menu, X, Facebook, Twitter, Instagram, Linkedin, MessageCircle, Send, Search } from 'lucide-react';
 import Map from './Map';
 
+
+const servicesData = [
+    { title: 'General Checkup', icon: Activity, description: 'Comprehensive health assessments for your well-being.' },
+    { title: 'Specialized Care', icon: Heart, description: 'Expert treatment for specific health conditions.' },
+    { title: 'Emergency Services', icon: Hospital, description: '24/7 rapid response for urgent medical needs.' },
+];
+
+const ServicePopup = ({ service, onClose }) => (
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+        <motion.div
+            className="bg-white rounded-lg p-6"
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+        >
+            <h3 className="text-2xl font-semibold mb-2">{service.title}</h3>
+            <p>{service.description}</p>
+            <button className="mt-4 bg-emerald-500 text-white px-4 py-2 rounded" onClick={onClose}>
+                Close
+            </button>
+        </motion.div>
+    </div>
+);
+
+
 const floatingIcons = [Heart, Activity, Clipboard, Hospital, Calendar, Users, Stethoscope, Thermometer, Pill, BriefcaseMedical, Heart, Activity, Clipboard, Hospital, Calendar];
 
 const FloatingIcon = ({ Icon, delay }) => {
     const controls = useAnimation();
 
+    
     useEffect(() => {
         controls.start({
             y: [0, Math.random() * 40 - 20],
             x: [0, Math.random() * 40 - 20],
             transition: {
+
                 y: { duration: 2, repeat: Infinity, repeatType: 'reverse', delay },
                 x: { duration: 2, repeat: Infinity, repeatType: 'reverse', delay: delay + 0.5 }
             }
@@ -147,6 +174,7 @@ const AutoSliderImage = () => {
 const HomePage = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [isChatOpen, setIsChatOpen] = useState(false);
+    const [selectedService, setSelectedService] = useState(null);
     const userRole = useSelector((state) => state.userRole.role);
 
     console.log(userRole);
@@ -207,8 +235,7 @@ const HomePage = () => {
       </div>
     </section>
 
-
-                <section className="py-20 bg-white relative overflow-hidden px-16 max-sm:px-1">
+    <section className="py-20 bg-white relative overflow-hidden px-16 max-sm:px-1">
                     <div className="container mx-auto px-6">
                         <motion.h2
                             initial={{ opacity: 0, y: 20 }}
@@ -219,11 +246,7 @@ const HomePage = () => {
                             Our Services
                         </motion.h2>
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                            {[
-                                { title: 'General Checkup', icon: Activity, description: 'Comprehensive health assessments for your well-being.' },
-                                { title: 'Specialized Care', icon: Heart, description: 'Expert treatment for specific health conditions.' },
-                                { title: 'Emergency Services', icon: Hospital, description: '24/7 rapid response for urgent medical needs.' },
-                            ].map((service, index) => (
+                            {servicesData.map((service, index) => (
                                 <motion.div
                                     key={index}
                                     initial={{ opacity: 0, y: 20 }}
@@ -238,6 +261,7 @@ const HomePage = () => {
                                         whileHover={{ scale: 1.05 }}
                                         whileTap={{ scale: 0.95 }}
                                         className="mt-4 bg-emerald-500 text-white px-4 py-2 rounded-full hover:bg-emerald-600 transition duration-300"
+                                        onClick={() => setSelectedService(service)}
                                     >
                                         Learn More
                                     </motion.button>
@@ -245,14 +269,15 @@ const HomePage = () => {
                             ))}
                         </div>
                     </div>
-                    {floatingIcons.map((Icon, index) => (
-                        <FloatingIcon
-                            key={index}
-                            Icon={Icon}
-                            delay={index * 0.2}
-                        />
-                    ))}
                 </section>
+
+                {selectedService && (
+                    <AnimatePresence>
+                        <ServicePopup service={selectedService} onClose={() => setSelectedService(null)} />
+                    </AnimatePresence>
+                )}
+
+          
 
                 <AutoSliderImage />
 
