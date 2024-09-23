@@ -15,7 +15,6 @@ const createUsersTable = async () => {
       role VARCHAR(50) DEFAULT 'user',
       profilepic VARCHAR(255),
       is_deleted BOOLEAN DEFAULT false
-
     );
   `;
 

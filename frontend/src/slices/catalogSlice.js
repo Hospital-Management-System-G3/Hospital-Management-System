@@ -4,9 +4,11 @@ import axios from 'axios';
 // Async thunk to fetch doctors and nurses
 export const fetchDoctorsAndNurses = createAsyncThunk(
   'users/fetchDoctorsAndNurses',
-  async () => {
-    const response = await axios.get('http://localhost:5000/api/users/doctors-nurses');
-    return response.data;
+  async (role) => {
+      const response = await axios.get('http://localhost:5000/api/users/doctors-nurses', {
+          params: { role } // أرسل الدور كمعامل
+      });
+      return response.data;
   }
 );
 

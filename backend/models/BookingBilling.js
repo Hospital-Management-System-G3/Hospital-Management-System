@@ -4,19 +4,21 @@ const pool = require('../config/db');
 // Function to create the 'BookingBilling' table
 const createBookingBillingTable = async () => {
   const query = `
+    DROP TABLE IF EXISTS BookingBilling; -- Drop if exists
     CREATE TABLE IF NOT EXISTS BookingBilling (
-      billing_id SERIAL PRIMARY KEY, -- Unique identifier for each billing record
-      booking_id INTEGER REFERENCES doctor_availabilities(availability_id) ON DELETE CASCADE, -- Foreign key referencing doctor_availabilities
-      user_id INTEGER NOT NULL REFERENCES users(user_id) ON DELETE CASCADE, -- Foreign key referencing users
-      doctor_id INTEGER NOT NULL REFERENCES users(user_id) ON DELETE CASCADE, -- Foreign key referencing users (doctor)
-      total_price DECIMAL(10, 2) DEFAULT 0, -- Total price for the booking
-      doctor_profit DECIMAL(10, 2) DEFAULT 0, -- Profit for the doctor
-      hospital_profit DECIMAL(10, 2) DEFAULT 0, -- Profit for the hospital
-      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, -- Timestamp when the billing was created
-      is_deleted BOOLEAN NOT NULL DEFAULT FALSE -- Flag to indicate if the record is deleted
-
-      
+      billing_id SERIAL PRIMARY KEY,
+      booking_id INTEGER REFERENCES doctor_availabilities(availability_id) ON DELETE CASCADE,
+      user_id INTEGER NOT NULL REFERENCES users(user_id) ON DELETE CASCADE,
+      doctor_id INTEGER NOT NULL REFERENCES users(user_id) ON DELETE CASCADE,
+      total_price DECIMAL(10, 2) DEFAULT 0,
+      doctor_profit DECIMAL(10, 2) DEFAULT 0,
+      hospital_profit DECIMAL(10, 2) DEFAULT 0,
+      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+      is_deleted BOOLEAN NOT NULL DEFAULT FALSE
     );
+    
+    ALTER TABLE doctor_availabilities ADD COLUMN IF NOT EXISTS status VARCHAR(20) NOT NULL DEFAULT 'active';
+
   `;
 
   try {

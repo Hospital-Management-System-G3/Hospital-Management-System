@@ -5,14 +5,16 @@
 // import thunk from 'redux-thunk';
 // import rootReducer from '../redux/rootReducer';
 // export const store = createStore(rootReducer, applyMiddleware(thunk));
-import { configureStore } from "@reduxjs/toolkit";
-import authReducer from "../slices/userSlice.js";
-import CatalogReducer from '../slices/catalogSlice.js';
+import { configureStore } from '@reduxjs/toolkit';
+import authReducer from "../slices/userSlice";
+import catalogReducer from '../slices/catalogSlice';
+// import doctorAvailabilityReducer from '../slices/doctorAvailabilitiesSlice';
 
 const store = configureStore({
   reducer: {
     auth: authReducer,
-    users: CatalogReducer,
+    users: catalogReducer,
+    // doctorAvailability: doctorAvailabilityReducer,
   },
 });
 
