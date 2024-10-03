@@ -15,6 +15,8 @@ import userRoleReducer from "../slices/roleSice.js";
 import contactReducer from "../slices/contactSlice.js";
 import chatsReducer from "../slices/chatsSlice.js";
 import patientReducer from "../slices/patientSlice.js"; 
+import catalogReducer from '../slices/catalogSlice';
+
 
  
 const store = configureStore({
@@ -27,8 +29,7 @@ const store = configureStore({
     contact: contactReducer,
     chats: chatsReducer,
     patientRecord: patientReducer,
- 
-    
+    users: catalogReducer,
   },
 });
 

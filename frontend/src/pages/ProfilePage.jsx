@@ -121,8 +121,8 @@ const PatientProfilePage = () => {
 
 
   return (
-    <div className="min-h-screen bg-gray-100 py-4 sm:py-8 px-2 sm:px-6 lg:px-8">
-      <div className="max-w-7xl mx-auto">
+    <div className="min-h-screen  bg-gray-100 py-4 sm:py-8 px-2 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto pt-20">
         <motion.div
           initial={{ opacity: 0, y: -50 }}
           animate={{ opacity: 1, y: 0 }}

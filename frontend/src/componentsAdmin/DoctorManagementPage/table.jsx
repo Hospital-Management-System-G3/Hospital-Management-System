@@ -371,7 +371,7 @@ export default function DoctorManagementPage() {
                 <td className="py-3 px-4">
                   <div className="flex items-center space-x-3">
                     <img
-                      src={doctor.photo}
+                      src={"https://png.pngtree.com/png-vector/20220709/ourmid/pngtree-businessman-user-avatar-wearing-suit-with-red-tie-png-image_5809521.png"}
                       alt={doctor.name}
                       className="w-10 h-10 rounded-full"
                     />

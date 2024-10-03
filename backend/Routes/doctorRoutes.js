@@ -12,6 +12,10 @@ const { deleteTime } = require("../Controllers/softDeleteTime");
 const { addDoctorAvailability } = require("../Controllers/addNewTime");
 const { fetchDoctorBillingDetails } = require("../Controllers/fetchDoctorBillingDetails");
 const { completeAppointment } = require("../Controllers/updatestatus");
+///
+const { getDoctorAvailabilities, bookAvailability } = require('../Controllers/doctorControllerHusabn');
+
+
 
  router.get("/doctorData", auth ,doctorData );
 router.get("/records",  allRecords );
@@ -20,9 +24,14 @@ router.put('/updaterecord/:record_id', updatePatientRecord);
 router.post('/addrecord', addPatientRecord);
 router.get('/doctorAvailabilities', auth , doctorAvailabilities);
 router.post('/deleteTime/:availability_id', deleteTime );
-router.post('/addAvailability/',auth, addDoctorAvailability );completeAppointment
+router.post('/addAvailability/',auth, addDoctorAvailability );
 router.get('/fetchDatabooked', auth, fetchDoctorBillingDetails);
 router.post('/completeAppointment/:billingId', completeAppointment);
+///
+router.get('/:doctorId/availabilities', getDoctorAvailabilities);
+router.post('/book', bookAvailability);
+
+
  
 
 
@@ -33,3 +42,6 @@ router.post('/logout', (req, res) => {
 
   
 module.exports = router;
+
+
+

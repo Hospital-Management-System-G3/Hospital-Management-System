@@ -378,7 +378,7 @@ const PatientManagementTable = () => {
                       <div className="flex items-center">
                         <img
                           className="h-10 w-10 rounded-full object-cover"
-                          src={patient.photo}
+                          src={"https://www.w3schools.com/howto/img_avatar.png"}
                           alt=""
                         />
                         <div className="ml-4">
